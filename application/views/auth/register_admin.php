@@ -241,31 +241,39 @@
         <div class="form-container">
         </div>
         <div class="form-inner">
-            <form action="<?php echo base_url(); ?>auth/aksi_register" class="signup">
+            <form action="<?php echo base_url('auth/aksi_register_admin'); ?>" method="post">
                 <div class="field">
-                    <input type="text" name="Username" placeholder="Username" required>
+                   
+                    <input type="text" name="username" placeholder="Username" required>
                 </div>
                 <div class="field">
-                    <input type="text" name="Email" placeholder="Email" required>
+                   
+                    <input type="text" name="email" placeholder="Email" required>
                 </div>
                 <div class="field">
-                    <input type="text" name="Nama Depan" placeholder="Nama Depan" required>
+                   
+                    <input type="text" name="nama_depan" placeholder="Nama Depan" required>
                 </div>
                 <div class="field">
-                    <input type="text" name="Nama Belakang" placeholder="Nama Belakang" required>
+                    
+                    <input type="text" name="nama_belakang" placeholder="Nama Belakang" required>
                 </div>
                 <div class="field">
-                    <input type="password" placeholder="Password" required>
+                  
+                    <input type="password" name="password" placeholder="Password" required>
+                    <small style="color:red">Kata sandi minimal harus 8 karakter!</small>
                 </div>
+                <!-- <label for="image">Profil</label>
+                                    <input type="file" class="form-control" id="image" name="image">
+                                    <label for="role">Role</label>
+                                    <select id="role" name="role" class="form-control" required> 
+
+                <option value="karyawan">karyawan</option>
+                </select>  -->
                 <div class="field btn">
-                    <div class="btn-layer"></div>
-                    <input type="submit" value="Register">
-                </div>
-                <div class="register_link">
-                    <p>Sudah punya akun?<a href='<?php echo base_url('auth'); ?>' style=color:black> Login</a>
-                    </p>
-                </div>
-            </form>
+                        <div class="btn-layer"></div>
+                        <input type="submit" value="Register">
+                    </div>
         </div>
     </div>
     </div>

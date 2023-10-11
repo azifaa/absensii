@@ -227,51 +227,52 @@
     </style>
 </head>
 </head>
-<body> 
-    <div class="wrapper"> 
-        <div class="title-text"> 
-            <div class="title login"> 
-                Register Form 
-            </div> 
-            <div class="title signup"> 
-                Login Form 
-            </div> 
-        </div> 
-        <div class="form-container"> 
+
+<body>
+    <div class="wrapper">
+        <div class="title-text">
+            <div class="title login">
+                Register karyawan
+            </div>
+            <div class="title signup">
+                Login Form
+            </div>
+        </div>
+        <div class="form-container">
             <!-- <div class="slide-controls"> 
                 <input type="radio" name="slide" id="login" checked> 
                 <input type="radio" name="slide" id="signup"> 
                 <label for="login" class="slide login"><a href="register">Register</a></label> 
                 <label for="signup" class="slide signup"><a href="./">Login</a></label> 
                 <div class="slider-tab"></div> 
-            </div> --> 
-            <div class="form-inner"> 
-                <form action="<?php echo base_url();?>auth/aksi_register_karyawan" method="post" class="signup"> 
- 
-                    <div class="field"> 
-                        <input type="text" name="username" placeholder="Username" required> 
-                    </div> 
-                    <div class="field"> 
-                        <input type="text" name="email" placeholder="Email" required> 
-                    </div> 
-                    <div class="field"> 
-                        <input type="text" name="nama_depan" placeholder="Nama Depan" required> 
-                    </div> 
-                    <div class="field"> 
-                        <input type="text" name="nama_belakang" placeholder="Nama Belakang" required> 
-                    </div> 
-                    <div class="field"> 
-                        <input type="password" name="password" placeholder="Password" required> 
-                    </div> 
- 
-                    <div class="field btn"> 
-                        <div class="btn-layer"></div> 
-                        <input type="submit" value="Register"> 
-                    </div> 
-                </form> 
-            </div> 
-        </div> 
-    </div> 
-</body> 
- 
+            </div> -->
+            <div class="form-inner">
+                <form action="<?php echo base_url('auth/aksi_register_karyawan'); ?>" method="post" class="signup">
+
+                    <div class="field">
+                        <input type="text" name="username" placeholder="Username" required>
+                    </div>
+                    <div class="field">
+                        <input type="text" name="email" placeholder="Email" required>
+                    </div>
+                    <div class="field">
+                        <input type="text" name="nama_depan" placeholder="Nama Depan" required>
+                    </div>
+                    <div class="field">
+                        <input type="text" name="nama_belakang" placeholder="Nama Belakang" required>
+                    </div>
+                    <div class="field">
+                        <input type="password" name="password" placeholder="Password" required>
+                    </div>
+
+                    <div class="field btn">
+                        <div class="btn-layer"></div>
+                        <input type="submit" value="Register">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+
 </html>

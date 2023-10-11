@@ -237,7 +237,7 @@
 
         </div>
         <div class="form-inner">
-            <form action="#" class="signup">
+            <form action="<?php echo base_url('auth/aksi_login'); ?>" class="signup">
                 <div class="field">
                     <input type="text" placeholder="Username" required>
                 </div>
@@ -250,10 +250,10 @@
                 </div>
                 <div class="field btn">
                     <div class="btn-layer"></div>
-                    <input type="submit" value="Register">
+                    <input type="submit">
                 </div>
                 <div class="register_link">
-                    <p>Belum punya akun?<a href='<?php echo base_url('auth/register'); ?>' style=color:black>
+                    <p>Belum punya akun?<a href='<?php echo base_url('auth/register_karyawan'); ?>' style=color:black>
                             register</a>
                     </p>
                 </div>

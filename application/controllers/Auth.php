@@ -16,109 +16,111 @@ class Auth extends CI_Controller {
             $this->load->view('auth/login');
         }
     //  aksi login
- public function aksi_login()
- {
-  $email = $this->input->post('email', 'Email', 'required|valid_email'); 
-  $password = $this->input->post('password', 'required|min_length[8]');
-  $data = [ 'email' => $email, ];
-  $query = $this->m_model->getwhere('admin', $data);
-  $result = $query->row_array();
+    public function aksi_login()
+    {
+        $email = $this->input->post('email', true);
+        $password = $this->input->post('password', true);
+        $data = ['email' => $email,];
+        $query = $this->m_model->getwhere('user', $data);
+        $result = $query->row_array();
 
-  if (!empty($result) && md5($password) === $result['password']) {
-   $data = [
-    'logged_in' => TRUE,
-    'email' => $result['email'],
-    'username' => $result['username'],
-    'role' => $result['role'],
-    'id' => $result['id'],
-   ];
-   $this->session->set_userdata($data);
-   if ($this->session->userdata('role') == 'admin') {
-    redirect(base_url()."admin");
-   } else {
-    redirect(base_url()."auth");
-   }
-  } else {
-   redirect(base_url()."auth");
-  }
-}
+        if (!empty($result) && md5($password) === $result['password']) {
+            $data = [
+                'logged_in' => TRUE,
+                'email' => $result['email'],
+                'username' => $result['username'],
+                'role' => $result['role'],
+                'id' => $result['id'],
+            ];
+            $this->session->set_userdata($data);
+
+            if ($this->session->userdata('role') == 'admin') {
+                redirect(base_url() . "admin");
+            }elseif ($this->session->userdata('role') == 'karyawan') {  
+                redirect(base_url()."karyawan/index");
+            }
+        } else {
+            redirect(base_url() . "karyawan/index");
+        }
+    }
 // register
-public function register() { 
-    $this->load->view('auth/register'); 
+public function register_admin() { 
+    $this->load->view('auth/register_admin'); 
+  } 
+public function register_karyawan() { 
+    $this->load->view('auth/register_karyawan'); 
   } 
   
-  public function aksi_register()
-{
-    $username = $this->input->post('username', true);
-    $email = $this->input->post('email', true);
-    $nama_depan = $this->input->post('nama_depan', true);
-    $nama_belakang = $this->input->post('nama_belakang', true);
-    $password = $this->input->post('password', true);
+  public function aksi_register_karyawan() 
+    { 
+        $this->load->library('form_validation'); 
+        
+        $this->form_validation->set_rules('email', 'Email', 'required|valid_email'); 
+        $this->form_validation->set_rules('username', 'username');
+        $this->form_validation->set_rules('password', 'Password', 'required|min_length[8]');
+        $this->form_validation->set_rules('role', 'role');
+        $this->form_validation->set_rules('nama_depan', 'nama_depan');
+        $this->form_validation->set_rules('nama_belakang', 'nama_belakang');
+        $this->form_validation->set_rules('image', 'image');
 
-    // Validasi input
-    if (empty($username) || empty($email) || empty($nama_depan) || empty($nama_belakang) || empty($password)) {
-        // Tampilkan pesan error jika ada input yang kosong
-        $this->session->set_flashdata('error', 'Semua field harus diisi.');
-        redirect(base_url() . 'auth'); // Gantilah dengan URL halaman registrasi Anda.
+        $email = $this->input->post('email', true);
+        $username = $this->input->post('username', true);
+        $password = md5($this->input->post('password', true));
+        $role = 'karyawan';
+        $nama_depan = $this->input->post('nama_depan', true);
+        $nama_belakang = $this->input->post('nama_belakang', true);
+        $image = $this->input->post('image', true);
+
+        // Membuat array data
+        $data = [
+            'email' => $email,
+            'username' => $username,
+            'password' => $password,
+            'role' => 'karyawan',
+            'nama_depan' => $nama_depan,
+            'nama_belakang' => $nama_belakang,
+            'image' => 'User.png'
+        ];
+
+        $this->db->insert('user', $data);
+
+        redirect('auth');
     }
+  public function aksi_register_admin() 
+    { 
+        $this->load->library('form_validation'); 
+        
+        $this->form_validation->set_rules('email', 'Email', 'required|valid_email'); 
+        $this->form_validation->set_rules('username', 'username');
+        $this->form_validation->set_rules('password', 'Password', 'required|min_length[8]');
+        $this->form_validation->set_rules('role', 'role');
+        $this->form_validation->set_rules('nama_depan', 'nama_depan');
+        $this->form_validation->set_rules('nama_belakang', 'nama_belakang');
+        $this->form_validation->set_rules('image', 'image');
 
-    // Anda perlu menambahkan logika untuk memasukkan data pengguna ke dalam database
-    // Sesuai dengan framework atau model yang Anda gunakan.
+        $email = $this->input->post('email', true);
+        $username = $this->input->post('username', true);
+        $password = md5($this->input->post('password', true));
+        $role = 'admin';
+        $nama_depan = $this->input->post('nama_depan', true);
+        $nama_belakang = $this->input->post('nama_belakang', true);
+        $image = $this->input->post('image', true);
 
-    // Misalnya, dengan menggunakan model untuk menyimpan data pengguna
-    $data = array(
-        'username' => $username,
-        'email' => $email,
-        'nama_depan' => $nama_depan,
-        'nama_belakang' => $nama_belakang,
-        'password' => md5($password), // Simpan kata sandi yang telah di-MD5
-        'role' => 'admin' // Atur peran sesuai dengan kebutuhan aplikasi Anda
-    );
+        // Membuat array data
+        $data = [
+            'email' => $email,
+            'username' => $username,
+            'password' => $password,
+            'role' => 'admin',
+            'nama_depan' => $nama_depan,
+            'nama_belakang' => $nama_belakang,
+            'image' => 'User.png'
+        ];
 
-    // Panggil model Anda untuk menyimpan data pengguna
-    $this->m_model->tambah_data('user', $data);
+        $this->db->insert('user', $data);
 
-    // Setelah data pengguna berhasil disimpan, Anda dapat mengarahkan pengguna
-    // ke halaman login atau halaman lain yang sesuai.
-    redirect(base_url() . 'auth'); // Gantilah dengan URL halaman login Anda.
-}
-
- 
-public function aksi_register_karyawan() 
-{ 
-    $username = $this->input->post('username', true); 
-    $email = $this->input->post('email', true); 
-    $nama_depan = $this->input->post('nama_depan', true); 
-    $nama_belakang = $this->input->post('nama_belakang', true); 
-    $password = $this->input->post('password', true); 
- 
-     // Validasi input 
-     if (empty($username) || empty($email) || empty($nama_depan) || empty($nama_belakang) || empty($password)) { 
-        // Tampilkan pesan error jika ada input yang kosong 
-        $this->session->set_flashdata('error', 'Semua field harus diisi.'); 
-        redirect(base_url().'auth'); // Gantilah dengan URL halaman registrasi Anda. 
-    } 
- 
-    // Anda perlu menambahkan logika untuk memasukkan data pengguna ke dalam database 
-    // Sesuai dengan framework atau model yang Anda gunakan. 
- 
-    // Misalnya, dengan menggunakan model untuk menyimpan data pengguna 
-    $data = array( 
-        'username' => $username, 
-        'email' => $email, 
-        'nama_depan' => $nama_depan, 
-        'nama_belakang' => $nama_belakang, 
-        'password' => md5($password), // Simpan kata sandi yang telah di-MD5 
-        'role' => 'karyawan' // Atur peran sesuai dengan kebutuhan aplikasi Anda 
-    ); 
- 
-    // Panggil model Anda untuk menyimpan data pengguna 
-    $this->m_model->tambah_data('user', $data); 
- 
-    // Setelah data pengguna berhasil disimpan, Anda dapat mengarahkan pengguna 
-    // ke halaman login atau halaman lain yang sesuai. 
-    redirect(base_url().'auth'); // Gantilah dengan URL halaman login Anda. 
-}
+        redirect('auth');
+    }
 
  
 function logout() { 
