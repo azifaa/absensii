@@ -238,9 +238,7 @@
         </div>
         <div class="form-inner">
             <form action="<?php echo base_url('auth/aksi_login'); ?>" class="signup">
-                <div class="field">
-                    <input type="text" placeholder="Username" required>
-                </div>
+
                 <div class="field">
                     <input type="text" placeholder="Email" required>
                 </div>

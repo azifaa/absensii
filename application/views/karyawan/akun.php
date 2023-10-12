@@ -13,9 +13,7 @@
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <!----===== Iconscout CSS ===== -->
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
-
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <!-- Script -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
         integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous">
@@ -25,7 +23,7 @@
         </script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-    <title>Dashboard</title>
+    <title>Profile Account</title>
 </head>
 <style>
     /* ===== Google Font Import - Poppins ===== */
@@ -256,7 +254,7 @@
     }
 
     body.dark .switch:before {
-        left: 40px;
+        left: 20px;
     }
 
     .dashboard {
@@ -547,6 +545,7 @@
             <span class="logo_name">Karyawan</span>
         </div>
 
+
         <div class="menu-items">
             <ul class="nav-links" style="padding-left:16px;">
                 <li><a href="<?php echo base_url('karyawan/index') ?>">
@@ -560,7 +559,7 @@
                         <span class="link-name">History Absensi</span>
                     </a></li>
                 <li><a href="<?php echo base_url('karyawan/absensi') ?>">
-                        <i class="fa-regular fa-calendar-days"></i>
+                <i class="fa-regular fa-calendar-days"></i>
                         <span class="link-name">Absensi</span>
                     </a></li>
                 <li><a href="<?php echo base_url('karyawan/izin') ?>">
@@ -583,14 +582,14 @@
                 <li>
                     <span id="clock2" name="date2" class="text-dark link-name"> </span>
                 </li>
-                <li><button class="btn btn-lg   " onclick="logout(id)">
+
+                <li><button class="btn btn-lg p-4.5rem  " onclick="logout(id)">
                         <i class="fa-solid fa-right-from-bracket"></i>
                         <span class="link-name">Keluar</span>
                     </button>
+
                 </li>
         </div>
-
-
     </nav>
 
     <section class="dashboard">
@@ -600,124 +599,129 @@
 
         </div>
 
-        <div class="dash-content mx-auto">
+        <div class="dash-content">
+
             <div class="overview shadow-lg p-1 mb-3 bg-body rounded">
-                <div class="d-flex">
+                <div class="title ">
 
-                    <div class="card  rounded " style="width: 16rem;height:11rem; margin-left:20px;">
-                        <p class=" fs-6 text-white text-center p-3 bg-dark">Total <br> Masuk</p>
-
-                        <p class=" fs-1 text-dark text-center">43</p>
-
-                    </div>
-                    <div class="card  rounded" style="width: 16rem;height:11rem; margin-left:20px;">
-                        <p class=" fs-6 text-white text-center p-3 bg-dark">Total
-                            <br>Cuti
-                        </p>
-                        <p class=" fs-1 text-dark text-center">8</p>
-                    </div>
+                    <span class="text ">Profile Account</span>
 
                 </div>
             </div>
             <div class="overview shadow-lg p-1 mb-3 bg-body rounded">
-                <div class="container">
-                    <div class="row">
-                        <div class="col">
-                            <div class="overflow-auto" style="white-space: nowrap;">
 
-                                <div class="title  ">
+                <?php $no = 0;
+                foreach ($user as $row):
+                    $no++ ?>
 
-                                    <span class="text text- ">Data Karyawan</span>
+
+                    <div class="  w-100 m-auto p-3 ">
+
+                        <br>
+                        <div>
+                            <?php $this->session->flashdata('message') ?>
+                        </div>
+                        <div class="row d-flex">
+                            <center>
+                                <button class="border border-0 btn btn-link" data-bs-toggle="modal"
+                                    data-bs-target="#exampleModal">
+                                    <?php if (!empty($row->foto)): ?>
+                                        <img class="rounded-circle" height="150" width="150"
+                                            src="<?php echo base64_decode($row->foto); ?>">
+                                    <?php else: ?>
+                                        <img class="rounded-circle" height="150" width="150"
+                                            src="https://slabsoft.com/wp-content/uploads/2022/05/pp-wa-kosong-default.jpg" />
+                                    <?php endif; ?>
+                                </button>
+                            </center>
+                            <br>
+                            <br>
+                            <form method="post" action="<?php echo base_url('admin/aksi_ubah_password') ?>"
+                                enctype="multipart/form_data">
+                                <input name="id_siswa" type="hidden" value="<?php echo $row->id ?>">
+                                <div class="d-flex flex-row ">
+
+                                    <div class="p-2 col-6">
+                                        <label for="" class="form-label fs-5 ">Email </label>
+                                        <input type="text" class="form-control" id="email" name="email" placeholder="Email"
+                                            value="<?php echo $row->email ?>">
+                                    </div>
+                                    <div class="p-2 col-6">
+                                        <label for="" class="form-label fs-5">Username </label>
+                                        <input type="text" class="form-control" id="username" name="username"
+                                            placeholder="Username" value="<?php echo $row->username ?>">
+                                    </div>
+                                </div>
+                                <br>
+                                <br>
+                                <div class="d-flex flex-row ">
+                                    <div class="p-2 col-6 >
+                    <label for=" nama="" class="form-label fs-5">Password Baru </label>
+                                        <input type="text" class="form-control" id="password_baru" name="password_baru"
+                                            placeholder="Password Baru" value=>
+                                    </div>
+                                    <div class="p-2 col-6 >
+                    <label for=" nama="" class="form-label fs-5"> Konfirmasi </label>
+                                        <input type="text" class="form-control" id="password_konfirmasi"
+                                            name="password_konfirmasi" placeholder="Konfirmasi Paswword" value=>
+                                    </div>
+                                </div>
+                                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                                    aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h1 class="modal-title fs-5" id="exampleModalLabel">Edit Foto Profile</h1>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                    aria-label="Close"></button>
+                                            </div>
+                                            <div class="container w-75 m p-3">
+                                                <form method="post"
+                                                    action="<?php echo base_url('karyawan/upload_image'); ?>"
+                                                    enctype="multipart/form-data" class="row">
+                                                    <div class="mb-3 col-12">
+                                                        <label for="nama" class="form-label">Foto:</label>
+                                                        <input type="hidden" class="form-control" id="id" name="id"
+                                                            value="<?php echo $this->session->userdata('id'); ?>">
+                                                        <input type="hidden" name="base64_image" id="base64_image">
+                                                        <input class="form-control" type="file" name="userfile"
+                                                            id="userfile" accept="image/*">
+                                                    </div>
+                                                    <div class="col-12 text-end">
+                                                        <input type="submit" class="btn btn-sm btn-primary px-3"
+                                                            name="submit" value="Ubah Foto"></input>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <a class="btn btn-danger"
+                                                    href="<?php echo base_url('karyawan/hapus_image'); ?>">Hapus
+                                                    Foto</a>
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+
+
+
+
 
 
                                 </div>
+                                <div class="flex justify-content-between">
 
-                                <table class="table table-hover">
-                                    <thead>
-                                        <tr class="table-hover">
-                                            <th scope="col">No</th>
-                                            <th scope="col">Kegiatan</th>
-                                            <th scope="col">Tanggal</th>
-                                            <th scope="col">Jam Masuk</th>
-                                            <th scope="col">Jam Keluar</th>
-                                            <th scope="col">Keterangan Izin</th>
-                                            <th scope="col">Status</th>
+                                    <div>
+                                        <button type="submit" class="btn btn-sm btn-dark" name=" submit">Confirm</button>
+                                    </div>
+                                </div>
 
-                                        </tr>
-                                    </thead>
-                                    <!-- <tbody>
-                                        <?php $no = 0;
-                                        foreach ($abseni as $row):
-                                            $no++ ?>
-                                            <tr class="whitespace-nowrap">
-                                                <td class="px-3 py-4 text-sm text-gray-500">
-                                                    <?php echo $no ?>
-                                                </td>
-                                                <td class="px-3 py-4">
-                                                    <div class="text-sm text-gray-900">
-                                                        <?php echo $row->kegiatan ?>
-                                                    </div>
-                                                </td>
-                                                <td class="px-3 py-4">
-                                                    <div class="text-sm text-gray-900">
-                                                        <?php echo $row->date ?>
-                                                    </div>
-                                                </td>
-                                                <td class="px-3 py-4">
-                                                    <div class="text-sm text-gray-900">
-                                                        <?php if ($row->jam_masuk == NULL) {
-                                                            echo '-';
-                                                        } else {
-                                                            echo $row->jam_masuk;
-                                                        } ?>
-                                                    </div>
-                                                </td>
-                                                <td class="px-3 py-4">
-                                                    <div class="text-sm text-gray-900">
-                                                        <?php if ($row->jam_keluar == NULL) {
-                                                            echo '-';
-                                                        } else {
-                                                            echo $row->jam_keluar;
-                                                        } ?>
-                                                    </div>
-                                                </td>
-                                                <td class="px-3 py-4">
-                                                    <div class="text-sm text-gray-900">
-                                                        <?php if ($row->keterangan_izin == NULL) {
-                                                            echo '-';
-                                                        } else {
-                                                            echo $row->keterangan_izin;
-                                                        } ?>
-                                                    </div>
-                                                </td>
-                                                <td class="px-3 py-4">
-                                                    <div class="text-sm text-gray-900">
-                                                        <?php if ($row->status == NULL) {
-                                                            echo 'not';
-                                                        } else {
-                                                            echo $row->status;
-                                                        } ?>
-                                                </td>
-                                            </tr>
-                                        <?php endforeach ?>
-                                    </tbody> -->
-                                </table>
-
-                            </div>
-                        </div>
+                            </form>
+                        <?php endforeach ?>
                     </div>
-                </div>
-
-            </div>
     </section>
 
-
-    <script>
-        $("#menu-toggle").click(function (e) {
-            e.preventDefault();
-            $("#wrapper").toggleClass("toggled");
-        });
-    </script>
     <script src="script.js"></script>
     <script>
         const body = document.querySelector("body"),
