@@ -30,9 +30,6 @@ class M_model extends CI_Model
         $data = $this->db->update($tabel, $data, $where);
         return $this->db->affected_rows();
     }
-    public function absensi($data) {
-        $this->db->insert('absensi', $data);
-    }
     public function register_user($data) { 
         // Masukkan data ke dalam tabel 'users' dan kembalikan hasilnya 
         return $this->db->insert('user', $data); 
@@ -41,4 +38,27 @@ class M_model extends CI_Model
     {
         return $this->db->where('id_karyawan', $id_karyawan)->get($table);
     }
+    
+    public function setAbsensiPulang($absen_id) {
+        // Fungsi ini digunakan untuk mengisi jam pulang dan mengubah status menjadi "pulang".
+        $data = array(
+            'jam_pulang' => date('H:i:s'),
+            'status' => 'pulang'
+        );
+
+        // Ubah data absensi berdasarkan absen_id.
+        $this->db->where('id', $absen_id);
+        $this->db->update('absensi', $data);
+    }
+    
+    public function batalPulang($absen_id) {
+        $data = array(
+            'jam_pulang' => null,
+            'status' => 'belum done'
+        );
+    
+        $this->db->where('id', $absen_id);
+        $this->db->update('absensi', $data);
+    }
+    
 }

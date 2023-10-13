@@ -23,16 +23,19 @@ class karyawan extends CI_Controller
         // Menampilkan tampilan (sesuaikan dengan nama tampilan Anda)
         $this->load->view('karyawan/index', $data);
     }
-    public function izin()
-    {       
-     
-        $this->load->view('karyawan/izin');
-    }
     public function history()
-    {       
-        $data['history'] = $this->m_model->get_data('absensi' , $this->session->userdata('id'))->result();
-
-        $this->load->view('karyawan/history',$data);
+    {
+        $this->load->model('Absensi_model');
+        $data['absensi'] = $this->Absensi_model->getAbsensi();
+        $this->load->view('karyawan/history', $data);
+    }
+    public function hapus($absen_id) {
+        if ($this->session->userdata('role') === 'karyawan') {
+            $this->karyawan_model->hapusAbsensi($absen_id);
+            redirect('karyawan/history_absen');
+        } else {
+            redirect('other_page');
+        }
     }
 public function hapus_karyawan($id)
 {
@@ -46,56 +49,49 @@ public function kegiatan()
         'kegiatan'=> $this->input->post('kegiatan')
     );
     $this->m_model->ubah_data('absensi', $data, array('id_karyawan' => $this->input->post('id_karyawan')));redirect(base_url('karyawan/history'));
- 
+    
 }
+    public function izin()
+    {       
+     
+        $this->load->view('karyawan/izin');
+    }
 public function absensi()
 {
 
     $this->load->view('karyawan/absensi');
 }
-public function aksi_absensi()
-{        
+public function save_absensi()
+{
     date_default_timezone_set('Asia/Jakarta');
-    $waktu_sekarang = date('Y-m-d H:i:s');
-    $id_karyawan = $this->session->userdata('id');
-    $tanggal_absensi = date('Y-m-d');
+    $current_datetime = date('Y-m-d H:i:s');
 
-    //  apakah karyawan sudah memiliki catatan absensi pada tanggal yang sama
-    $absen = $this->m_model->getwhere('absensi', array(
-        'id_karyawan' => $id_karyawan,
-        'date' => $tanggal_absensi
-    ));
+    $data = [
+        'kegiatan' => $this->input->post('kegiatan'),
+        'date' => $current_datetime,
+        'jam_masuk' => $current_datetime,
+        'jam_pulang' => $current_datetime,
+    ];
 
-    if ($absen->num_rows() > 0) {
-      
-        // Karyawan sudah melakukan absensi pada tanggal yang sama
-        $this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible fade show" role="alert">
-       Anda Sudah Absensi Atau Izin Hari Ini
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    
-      </div>');
-        redirect(base_url('karyawan/absensi')); 
-    } else {
-        // Karyawan belum melakukan absensi pada tanggal yang sama, bisa melanjutkan dengan absensi
-        $data = [
-            'id_karyawan' => $id_karyawan,
-            'kegiatan' => $this->input->post('kegiatan'),
-            'jam_keluar' => NULL,
-            'jam_masuk' => $waktu_sekarang, 
-            'date' => $tanggal_absensi,  
-            'keterangan_izin' => '-',
-            'status' => 'not'
-        ];
+    $this->load->model('Absensi_model');
+    $this->Absensi_model->createAbsensi($data);
 
-        $this->m_model->tambah_data('absensi', $data);
-        redirect(base_url('karyawan/history'));
-    }
+    redirect('karyawan/history');
 }
+public function tambah_absen()
+    {
+        $this->load->view('karyawan/tambah_absen');
+    }
+public function ubah_absensi()
+{
+    $this->load->view('karyawan/ubah_absensi');
+}
+
 public function aksi_izin()
 {         
     
     date_default_timezone_set('Asia/Jakarta');
-    $waktu_sekarang = date('Y-m-d H:i:s');
+    $current_datetime = date('Y-m-d H:i:s');
     $id_karyawan = $this->session->userdata('id');
     $tanggal_izin = date('Y-m-d');
 
@@ -131,17 +127,35 @@ public function aksi_izin()
          redirect(base_url('karyawan/history'));
 }
 }
-public function pulang($id)
-{
-    date_default_timezone_set('Asia/Jakarta');
-    $waktu_sekarang = date('Y-m-d H:i:s');
-    $data = [
-        'jam_keluar' => $waktu_sekarang,
-        'status' => 'done'
-    ];
-    $this->m_model->ubah_data('absensi', $data, array('id'=> $id));
-    redirect(base_url('karyawan/history'));
+public function pulang($absen_id) {
+    if ($this->session->userdata('role') === 'karyawan') {
+        $this->m_model->setAbsensiPulang($absen_id);
+
+        // Set pesan sukses
+        $this->session->set_flashdata('success', 'Jam pulang berhasil diisi.');
+
+        // Panggil fungsi JavaScript untuk menampilkan SweetAlert2
+        echo '<script>showSweetAlert("Jam pulang berhasil diisi.");</script>';
+
+        redirect('karyawan/history');
+    } else {
+        redirect('other_page');
+    }
 }
+public function batal_pulang($absen_id) {
+    if ($this->session->userdata('role') === 'karyawan') {
+        $this->karyawan_model->batalPulang($absen_id);
+
+        // Set pesan sukses
+        $this->session->set_flashdata('success', 'Batal Pulang berhasil.');
+
+        // Redirect kembali ke halaman riwayat absen
+        redirect('karyawan/history_absen');
+    } else {
+        redirect('other_page');
+    }
+}
+
 public function akun()
 {         
     $data['user'] = $this-> m_model->get_data ('user' , $this->session->userdata('id'))->result();
@@ -150,8 +164,6 @@ public function akun()
     $this->load->view('karyawan/akun',$data);
 
 }
-
-
 public function upload_image()
 {  
     $base64_image = $this->input->post('base64_image');
@@ -202,9 +214,6 @@ public function aksi_ubah_password()
     }else {
       echo 'erorr';
     }
-    
-   
-    
 }
 }
 ?>
