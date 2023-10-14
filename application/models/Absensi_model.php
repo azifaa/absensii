@@ -24,12 +24,12 @@ class Absensi_model extends CI_Model
         $this->db->update('absensi', $data);
     }
 
-    public function deleteAbsensi($id)
-    {
-        // Menghapus data absensi berdasarkan ID
-        $this->db->where('id', $id);
-        $this->db->delete('absensi');
-    }
+    // public function deleteAbsensi($id)
+    // {
+    //     // Menghapus data absensi berdasarkan ID
+    //     $this->db->where('id', $id);
+    //     $this->db->delete('absensi');
+    // }
 }
 
 ?>

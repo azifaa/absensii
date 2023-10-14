@@ -39,7 +39,6 @@
                         <p class=" fs-6 text-white text-center p-3 bg-dark">Total <br> Masuk</p>
 
                         <p class=" fs-1 text-dark text-center">43</p>
-
                     </div>
                     <div class="card  rounded" style="width: 16rem;height:11rem; margin-left:20px;">
                         <p class=" fs-6 text-white text-center p-3 bg-dark">Total
@@ -47,7 +46,6 @@
                         </p>
                         <p class=" fs-1 text-dark text-center">8</p>
                     </div>
-
                 </div>
             </div>
         <div class="overview shadow-lg p-1 mb-3 bg-body rounded">

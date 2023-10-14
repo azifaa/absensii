@@ -1,71 +1,33 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
-class Admin extends CI_Controller {
-    public function __construct() {
+class Admin extends CI_Controller
+{
+    function __construct()
+    {
         parent::__construct();
-        // Load model yang diperlukan
-        $this->load->model('admin_model');
-        $this->load->library('form_validation');
+        $this->load->model('m_model');
+        $this->load->helper('my_helper');
+        $this->load->library('upload');
+        if ($this->session->userdata('logged_in') != true || $this->session->userdata('role') != 'admin') {
+            redirect(base_url() . 'auth/login');
+        }
     }
-
-    public function index() {
-        // Tampilkan halaman dashboard admin di sini
-        $this->load->view('admin/dashboard');
+    public function dashboard()
+    {
+        $data['absen'] = $this-> m_model->get_data('absensi' , $this->session->userdata('id'))->result();
+        $data['jumlah_absen'] = $this-> m_model->get_data('absensi' , $this->session->userdata('id'))->num_rows();
+         $this->load->view('admin/dashboard',$data);
     }
-
-    public function karyawan() {
-        // Ambil data karyawan dari model
-        $data['karyawan'] = $this->admin_model->getKaryawan();
-
-        // Tampilkan halaman daftar karyawan dengan data
-        $this->load->view('admin/daftar_karyawan', $data);
+   
+    public function rekap_bulan()
+    {   $data['absensi'] = $this->m_model->getAbsensiLast7Days();
+        $this->load->view('admin/rekap_bulan',$data);
     }
-
-    public function export_karyawan() {
-        // Ambil data karyawan untuk diekspor
-        $data['karyawan'] = $this->admin_model->exportKaryawan();
-
-        // Lakukan proses ekspor data karyawan di sini (contoh: export ke Excel atau CSV)
-        // ...
-
-        // Redirect kembali ke halaman daftar karyawan setelah selesai ekspor
-        redirect('admin/karyawan');
+    public function karyawan()
+    {
+        $this->load->view('admin/karyawan');
     }
-
-    public function rekap_harian($tanggal) {
-        // Ambil data rekap harian berdasarkan tanggal
-        $data['rekap_harian'] = $this->admin_model->getRekapHarian($tanggal);
-
-        // Tampilkan halaman rekap harian dengan data
-        $this->load->view('admin/rekap_harian', $data);
-    }
-
-    public function rekap_mingguan($tanggal_awal, $tanggal_akhir) {
-        // Ambil data rekap mingguan berdasarkan tanggal awal dan akhir
-        $data['rekap_mingguan'] = $this->admin_model->getRekapMingguan($tanggal_awal, $tanggal_akhir);
-
-        // Tampilkan halaman rekap mingguan dengan data
-        $this->load->view('admin/rekap_mingguan', $data);
-    }
-
-    public function rekap_bulanan($bulan, $tahun) {
-        // Ambil data rekap bulanan berdasarkan bulan dan tahun
-        $data['rekap_bulanan'] = $this->admin_model->getRekapBulanan($bulan, $tahun);
-
-        // Tampilkan halaman rekap bulanan dengan data
-        $this->load->view('admin/rekap_bulanan', $data);
-    }
-    public function export_rekapan($tanggal_awal, $tanggal_akhir) {
-        // Ambil data rekap untuk diekspor
-        $data['rekapan'] = $this->admin_model->exportRekapan($tanggal_awal, $tanggal_akhir);
-
-        // Lakukan proses ekspor data rekap di sini (contoh: export ke Excel atau CSV)
-        // ...
-
-        // Redirect kembali ke halaman yang sesuai setelah selesai ekspor
-        // ...
-
-        // Misalnya, Anda bisa mengarahkan kembali ke halaman rekap harian atau mingguan
-    }
-}
+   
+    
+}  

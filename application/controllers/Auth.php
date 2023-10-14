@@ -45,7 +45,7 @@ class Auth extends CI_Controller {
     }
 // register
 public function register_admin() { 
-    $this->load->view('auth/register_admin'); 
+    $this->load->view('auth/admin'); 
   } 
 public function register_karyawan() { 
     $this->load->view('auth/register_karyawan'); 
@@ -119,10 +119,9 @@ public function register_karyawan() {
 
         $this->db->insert('user', $data);
 
-        redirect('auth');
+        redirect(base_url(('auth/admin')));
     }
 
- 
 function logout() { 
     $this->session->sess_destroy(); // Menggunakan sess_destroy() untuk mengakhiri sesi 
     redirect(base_url('auth')); 

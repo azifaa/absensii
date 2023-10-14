@@ -29,18 +29,14 @@ class karyawan extends CI_Controller
         $data['absensi'] = $this->Absensi_model->getAbsensi();
         $this->load->view('karyawan/history', $data);
     }
-    public function hapus($absen_id) {
-        if ($this->session->userdata('role') === 'karyawan') {
-            $this->karyawan_model->hapusAbsensi($absen_id);
-            redirect('karyawan/history_absen');
-        } else {
-            redirect('other_page');
-        }
-    }
-public function hapus_karyawan($id)
+    public function hapus_karyawan($id)
 {
     $this->m_model->delete('absensi', 'id', $id);
-    redirect(base_url('history'));
+    $this->session->set_flashdata(
+        'berhasil_menghapus',
+        'Data berhasil dihapus.'
+    );
+    redirect(base_url('karyawan/history'));
 }
 
 public function kegiatan()
@@ -82,12 +78,12 @@ public function tambah_absen()
     {
         $this->load->view('karyawan/tambah_absen');
     }
-public function ubah_absensi()
-{
-    $this->load->view('karyawan/ubah_absensi');
-}
+// public function ubah_absen()
+// {
+//     $this->load->view('karyawan/ubah_absen');
+// }
 
-public function aksi_izin()
+public function aksi_ubah_izin()
 {         
     
     date_default_timezone_set('Asia/Jakarta');
@@ -150,7 +146,7 @@ public function batal_pulang($absen_id) {
         $this->session->set_flashdata('success', 'Batal Pulang berhasil.');
 
         // Redirect kembali ke halaman riwayat absen
-        redirect('karyawan/history_absen');
+        redirect('karyawan/history');
     } else {
         redirect('other_page');
     }
@@ -158,7 +154,7 @@ public function batal_pulang($absen_id) {
 
 public function akun()
 {         
-    $data['user'] = $this-> m_model->get_data ('user' , $this->session->userdata('id'))->result();
+    $data['user'] = $this->m_model->get_by_id('user', 'id', $this->session->userdata('id'))->result();
 
 
     $this->load->view('karyawan/akun',$data);
@@ -213,6 +209,25 @@ public function aksi_ubah_password()
        echo redirect(base_url('karyawan/akun'));
     }else {
       echo 'erorr';
+    }
+}
+public function ubah_absen($id)
+{
+    $data['absen'] = $this-> m_model->get_by_id('absensi' , 'id', $id)->result();
+    $this->load->view('karyawan/ubah_absen',$data);
+}
+public function aksi_ubah_absen()
+{
+    $data =  [
+        'kegiatan' => $this->input->post('kegiatan'),
+    ];
+    $eksekusi = $this->m_model->ubah_data('absensi', $data, array('id'=>$this->input->post('id')));
+    if($eksekusi) {
+        $this->session->set_flashdata('sukses' , 'berhasil');
+        redirect(base_url('karyawan/history'));
+    } else {
+        $this->session->set_flashdata('error' , 'gagal...');
+        redirect(base_url('karyawan/ubah_absen'.$this->input->post('id')));
     }
 }
 }

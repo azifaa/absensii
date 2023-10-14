@@ -60,5 +60,12 @@ class M_model extends CI_Model
         $this->db->where('id', $absen_id);
         $this->db->update('absensi', $data);
     }
-    
+    // public function absensi($data) {
+    //     $this->db->insert('absensi', $data);
+    // }
+    // function delete($table, $field, $id)
+    // {
+    //     $data = $this->db->delete($table, array($field => $id));
+    //     return $data;
+    // } 
 }
