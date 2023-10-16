@@ -123,19 +123,25 @@ public function aksi_ubah_izin()
          redirect(base_url('karyawan/history'));
 }
 }
-public function pulang($absen_id) {
-    if ($this->session->userdata('role') === 'karyawan') {
-        $this->m_model->setAbsensiPulang($absen_id);
+public function aksi_pulang()
+{
+    $id_karyawan = $this->input->post('id_karyawan');
+    
+    // Set zona waktu ke "Asia/Jakarta"
+    date_default_timezone_set('Asia/Jakarta');
+    
+    $current_datetime = date('Y-m-d H:i:s');
+    
+    list($date, $time) = explode(' ', $current_datetime);
 
-        // Set pesan sukses
-        $this->session->set_flashdata('success', 'Jam pulang berhasil diisi.');
-
-        // Panggil fungsi JavaScript untuk menampilkan SweetAlert2
-        echo '<script>showSweetAlert("Jam pulang berhasil diisi.");</script>';
-
-        redirect('karyawan/history');
-    } else {
-        redirect('other_page');
+    $absen = $this->m_model->getAbsenByKaryawan($id_karyawan);
+    
+    if ($absen->status != 'Done') {
+        $data = [
+            'jam_pulang' => $time, // Menggunakan waktu saat ini
+            'status' => 'Done'
+        ];
+        $this->m_model->updateAbsen($absen->id_karyawan, $data);
     }
 }
 public function batal_pulang($absen_id) {

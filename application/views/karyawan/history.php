@@ -98,7 +98,7 @@
                                     $row['id']; ?>" type="button" class="btn btn-primary">
                                         <i class="fa-solid fa-pen-to-square"></i>
                                     </a>
-                                    <button onClick="hapus(<?php echo $row['id_karyawan']; ?>)" type="button"
+                                    <button onClick="hapus(<?php echo $row['id']; ?>)" type="button"
                                         class="btn btn-danger"><i class="fa-solid fa-trash"></i></button>
                                         </td>
                             </tr>

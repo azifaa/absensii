@@ -15,7 +15,7 @@ class M_model extends CI_Model
         $data = $this->db->delete($table, array($field => $id));
         return $data;
     }
-    function tambah_data($table, $data)
+    function add($table, $data)
     {
         $this->db->insert($table, $data);
         return $this->db->insert_id();
@@ -25,7 +25,7 @@ class M_model extends CI_Model
         $data = $this->db->where($id_column, $id)->get($tabel);
         return $data;
     }
-    public function ubah_data($tabel, $data, $where)
+    public function update($tabel, $data, $where)
     {
         $data = $this->db->update($tabel, $data, $where);
         return $this->db->affected_rows();
@@ -39,33 +39,56 @@ class M_model extends CI_Model
         return $this->db->where('id_karyawan', $id_karyawan)->get($table);
     }
     
-    public function setAbsensiPulang($absen_id) {
-        // Fungsi ini digunakan untuk mengisi jam pulang dan mengubah status menjadi "pulang".
-        $data = array(
-            'jam_pulang' => date('H:i:s'),
-            'status' => 'pulang'
-        );
+    public function updateAbsen($id_karyawan, $data) {
+        $this->db->where('id_karyawan', $id_karyawan);
+        $this->db->update('absen', $data);
+    }
+    public function getStatusAbsen($id_karyawan, $tanggal) {
+        $this->db->where('id_karyawan', $id_karyawan);
+        $this->db->where('date', $tanggal);
+        $result = $this->db->get('absen')->row();
 
-        // Ubah data absensi berdasarkan absen_id.
-        $this->db->where('id', $absen_id);
-        $this->db->update('absensi', $data);
+        if ($result) {
+            return $result->status;
+        }
+
+        // Jika tidak ada data absen untuk tanggal tersebut, maka karyawan belum absen
+        return 'belum_absen';
+    }
+
+    public function updateStatusAbsen($id_karyawan, $tanggal, $status) {
+        $data = array('status' => $status);
+        $this->db->where('id_karyawan', $id_karyawan);
+        $this->db->where('date', $tanggal);
+        $this->db->update('absen', $data);
+    }
+    // Mendapatkan data absen berdasarkan ID karyawan
+    public function getAbsenByKaryawan($id_karyawan) {
+        return $this->db->get_where('absen', ['id_karyawan' => $id_karyawan])->row();
+    }
+    // get karyawan page
+    public function get_karyawan_page($limit, $offset) {
+        $this->db->where('role', 'karyawan');
+        $this->db->limit($limit, $offset);
+        $query = $this->db->get('user'); 
+        return $query->result();
+    }
+    // count karyawan
+    public function count_karyawan() {
+        $this->db->where('role', 'karyawan');
+        return $this->db->count_all_results('user'); 
+    }
+    // get history
+    public function get_history_page($limit, $offset, $karyawan_id) {
+        $this->db->where('id_karyawan', $karyawan_id);
+        $this->db->limit($limit, $offset);
+        $query = $this->db->get('absensi'); 
+        return $query->result();
+    }
+    // count history
+    public function count_history($karyawan_id) {
+        $this->db->where('id_karyawan', $karyawan_id);
+        return $this->db->count_all_results('absensi'); 
     }
     
-    public function batalPulang($absen_id) {
-        $data = array(
-            'jam_pulang' => null,
-            'status' => 'belum done'
-        );
-    
-        $this->db->where('id', $absen_id);
-        $this->db->update('absensi', $data);
-    }
-    // public function absensi($data) {
-    //     $this->db->insert('absensi', $data);
-    // }
-    // function delete($table, $field, $id)
-    // {
-    //     $data = $this->db->delete($table, array($field => $id));
-    //     return $data;
-    // } 
 }

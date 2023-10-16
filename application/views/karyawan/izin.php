@@ -39,7 +39,7 @@
             </div>
             <?php echo $this->session->flashdata('message'); ?>
 
-            <form action="<?php echo base_url('Karyawan/aksi_izin') ?>" method="post" enctype="multipart/form-data">
+            <form action="<?php echo base_url('Karyawan/aksi_ubah_izin') ?>" method="post" enctype="multipart/form-data">
                 <div class="overview shadow-lg p-4 mb-3 bg-body rounded">
                     <div class="wrapper d-flex flex-column">
 
