@@ -112,7 +112,7 @@ class Auth extends CI_Controller {
             if ($result['role'] == 'karyawan') {
                 redirect(base_url() . "karyawan/index");
             } elseif ($result['role'] == 'admin') {
-                redirect(base_url(). 'admin/dashboard');
+                redirect(base_url(). "admin/dashboard");
             }
         } else {
             $this->session->set_flashdata('error' , 'error ');

@@ -7,11 +7,43 @@
     <title>Karyawan</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <style>
+        .pagination {
+        display: flex;
+        justify-content: center;
+        gap: 1rem;
+}
+
+.pagination a,
+.pagination strong {
+  display: block;
+  width: 2rem;
+  height: 2rem;
+  text-align: center;
+  line-height: 2rem;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  border-radius:4px;
+  color: #333;
+}
+
+.pagination a:hover,
+.pagination strong {
+	display: block;
+width: 2rem;
+height: 2rem;
+border: 1px solid #f9fafb; /* Ganti dengan warna sesuai kebutuhan Anda */
+background-color: #f9fafb; /* Ganti dengan warna sesuai kebutuhan Anda */
+text-align: center;
+line-height: 2rem;
+color: #fff;
+}
+    </style>
 </head>
 
 <body>
 <div class="relative min-h-screen md:flex" data-dev-hint="container">
-<?php $this->load->view('component/sidebar_admin')?>
+<?php $this->load->view('components/sidebar_admin')?>
       <main id="content" class="max-h-screen overflow-y-auto flex-1 p-6 lg:px-8">
       <div class="container mx-auto">
           <div class="grid grid-cols-1 px-2 md:grid-cols-3 rounded-t-lg py-2.5 bg-rose-700 text-white text-xl">

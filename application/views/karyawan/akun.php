@@ -26,7 +26,7 @@
     <title>Profile Account</title>
 </head>
 <body>
-<?php $this->load->view('components/sidebar_all'); ?>
+<?php $this->load->view('components/sidebar_karyawan'); ?>
     <section class="dashboard">
         <div class="top">
             <i class="uil uil-bars sidebar-toggle"></i>
