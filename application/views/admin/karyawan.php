@@ -46,7 +46,7 @@ color: #fff;
 <?php $this->load->view('components/sidebar_admin')?>
       <main id="content" class="max-h-screen overflow-y-auto flex-1 p-6 lg:px-8">
       <div class="container mx-auto">
-          <div class="grid grid-cols-1 px-2 md:grid-cols-3 rounded-t-lg py-2.5 bg-rose-700 text-white text-xl">
+          <div class="grid grid-cols-1 px-2 md:grid-cols-3 rounded-t-lg py-2.5 bg-stone-700 text-white text-xl">
             <div class="flex justify-center mb-2 md:justify-start md:pl-6">
               DATA KARYAWAN
             </div>

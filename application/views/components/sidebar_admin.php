@@ -9,8 +9,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <style>
      #sidebar {
-        background-color: #ffffff; /* Mengubah latar belakang sidebar menjadi putih */
-        color: #000000; /* Mengubah warna teks pada sidebar menjadi hitam */
+        background-color: black; /* Mengubah latar belakang sidebar menjadi putih */
+        color: #ffffff; /* Mengubah warna teks pada sidebar menjadi hitam */
     }
 
     #menu-close-icon {
@@ -94,13 +94,13 @@
         class="max-h-screen bg-gray-800 text-gray-100 md:w-64 w-3/4 space-y-6 pt-6 px-0 absolute z-50 inset-y-0 left-0 transform md:relative md:translate-x-0 transition duration-700 ease-in-out md:justify-between md:flex md:flex-col overflow-y-auto"
         data-dev-hint="sidebar; px-0 for frameless; px-2 for visually inset the navigation">
         <div class="flex flex-col space-y-4" data-dev-hint="optional div for having an extra footer navigation">
-            <div class="text-black flex-1 items-center px-4">
+            <div class="text-white flex-1 items-center px-4">
                 <div class="text-lg font-semibold">ADMIN</div>
             </div>
             <hr />
             <nav data-dev-hint="main navigation">
                 <a href="<?php echo base_url('admin/dashboard') ?>"
-                    class="flex items-center py-2 text-black px-4 transition duration-300 no-underline gap-2"
+                    class="flex items-center py-2 text-white px-4 transition duration-300 no-underline gap-2"
                     activeclass="active">
                     <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 icoon" viewBox="0 0 512 512">
                         <path
@@ -109,7 +109,7 @@
                     <span class="font-semibold text-lg">Dashboard</span>
                 </a>
                 <a href="<?php echo base_url('admin/karyawan') ?>"
-                    class="flex items-center py-2 text-black px-4 transition duration-300 no-underline gap-2"
+                    class="flex items-center py-2 text-white px-4 transition duration-300 no-underline gap-2"
                     activeclass="active">
                     <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 icoon" viewBox="0 0 512 512">
                         <path
@@ -118,7 +118,7 @@
                     <span class="font-semibold text-lg">Data Karyawan</span>
                 </a>
                 <a href="<?php echo base_url('admin/rekap_harian') ?>"
-                    class="flex items-center py-2 text-black px-4 transition duration-300 no-underline gap-2"
+                    class="flex items-center py-2 text-white px-4 transition duration-300 no-underline gap-2"
                     activeclass="active">
                     <svg class="w-6 h-6 icoon" xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512">
                         <path
@@ -127,7 +127,7 @@
                     <span class="font-semibold text-lg">Rekap Harian</span>
                 </a>
                 <a href="<?php echo base_url('admin/rekap_mingguan') ?>"
-                    class="flex items-center py-2 text-black px-4 transition duration-300 no-underline gap-2"
+                    class="flex items-center py-2 text-white px-4 transition duration-300 no-underline gap-2"
                     activeclass="active">
                     <svg class="w-6 h-6 icoon" xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512">
                         <path
@@ -136,7 +136,7 @@
                     <span class="font-semibold text-lg">Rekap Mingguan</span>
                 </a>
                 <a href="<?php echo base_url('admin/rekap_bulanan') ?>"
-                    class="flex items-center py-2 text-black px-4 transition duration-300 no-underline gap-2"
+                    class="flex items-center py-2 text-white px-4 transition duration-300 no-underline gap-2"
                     activeclass="active">
                     <svg class="w-6 h-6 icoon" xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512">
                         <path
@@ -147,7 +147,7 @@
             </nav>
         </div>
         <button onclick="logout()"
-            class="flex items-center py-2 text-black px-4 transition duration-300 no-underline gap-2 cursor-pointer"
+            class="flex items-center py-2 text-white px-4 transition duration-300 no-underline gap-2 cursor-pointer"
             data-dev-hint="second-main-navigation or footer navigation">
             <svg class="w-6 h-6 icoon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
                 <path

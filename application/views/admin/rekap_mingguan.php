@@ -16,11 +16,20 @@
     <div class="relative min-h-screen md:flex" data-dev-hint="container">
         <?php $this->load->view('components/sidebar_admin')?>
         <main id="content" class="max-h-screen overflow-y-auto flex-1 p-6 lg:px-8">
-            <div class="container mx-auto">
-                <div class="grid grid-cols-1 px-2 md:grid-cols-3 rounded-t-lg py-2.5 bg-rose-700 text-white text-xl">
+        <div class="container mx-auto">
+                <div class="grid grid-cols-1 px-2 md:grid-cols-3 rounded-t-lg py-2.5 bg-stone-700 text-white text-xl">
                     <div class="flex justify-center mb-2 md:justify-start md:pl-6">
                         REKAP MINGGUAN
                     </div>
+                    <div class="flex flex-wrap justify-center col-span-2 gap-2 md:justify-end">
+              <a
+              href="<?php echo base_url('Admin/export_rekap_mingguan'); ?>"
+                class="py-1 float-end bg-sky-400
+          text-white bg-sky-500 hover:bg-sky-600 focus:ring-4 focus:outline-none focus:ring-sky-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center w-[250px] md:w-[250px]"
+              >
+                Export Data
+              </a>
+            </div>
                 </div>
                 <div class="overflow-x-auto w-full px-4 bg-white rounded-b-lg shadow">
                     <table class="my-4 w-full divide-y divide-gray-300 text-center">

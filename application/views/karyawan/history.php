@@ -81,9 +81,9 @@
                                         <p>Masuk</p>
                                     <?php endif; ?>
                                 </td>
-                            <!-- <?php if (!empty($row['keterangan_izin'])): ?>
+                                <td>
+                                <!-- <?php if (!empty($row['keterangan_izin'])): ?>
                                     <?php else: ?> -->
-                                    <td>
                                         <a href="javascript:setHomeTime(<?php echo $i; ?>);" class="btn btn-success <?php echo !empty(
                                                $row['keterangan_izin']
                                                )
@@ -91,16 +91,18 @@
                                                : ''; ?>">
                                             <i class="fa-solid fa-house"></i>
                                         </a>
+                                        <?php endif; ?>
                                     </td>
-                                <?php endif; ?>
                                 <td>
                                     <a href="<?php echo base_url('karyawan/ubah_absen/') .
-                                    $row['id']; ?>" type="button" class="btn btn-primary">
+                                        $row['id']; ?>" type="button" class="btn btn-primary">
                                         <i class="fa-solid fa-pen-to-square"></i>
                                     </a>
+                                    <!-- HAPUS -->
                                     <button onClick="hapus(<?php echo $row['id']; ?>)" type="button"
                                         class="btn btn-danger"><i class="fa-solid fa-trash"></i></button>
-                                        </td>
+
+                                </td>
                             </tr>
                             <?php $i++; ?>
                         <?php endforeach; ?>

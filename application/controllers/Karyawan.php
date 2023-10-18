@@ -118,7 +118,7 @@ public function aksi_ubah_izin()
         ];
         
     
-        $this->m_model->tambah_data('absensi', $data);
+        $this->m_model->add('absensi', $data);
          
          redirect(base_url('karyawan/history'));
 }
@@ -157,48 +157,82 @@ public function batal_pulang($absen_id) {
         redirect('other_page');
     }
 }
-
 public function akun()
 {         
-    $data['user'] = $this->m_model->get_by_id('user', 'id', $this->session->userdata('id'))->result();
-
-
-    $this->load->view('karyawan/akun',$data);
+    $data['user'] = $this->m_model->get_by_id('user', 'id', $this->session->userdata('id'));
+        $this->load->view('karyawan/akun', $data);
 
 }
-public function upload_image()
-{  
-    $base64_image = $this->input->post('base64_image');
+// update profile
+public function aksi_update_profile()
+{
+    $foto = $_FILES['foto']['name'];
+    $foto_temp = $_FILES['foto']['tmp_name'];
+    $username = $this->input->post('username');
+    $nama_depan = $this->input->post('nama_depan');
+    $nama_belakang = $this->input->post('nama_belakang');
+    // $foto = $this->upload_img('foto');
+    // Jika ada foto yang diunggah
+    if ($foto) {
+        $kode = round(microtime(true) * 900);
+        $file_name = $kode . '_' . $foto;
+        $upload_path = './image/' . $file_name;
 
-    $binary_image = base64_encode($base64_image);
-
-    $data = array(
-        'foto' => $binary_image
-    );
-
-    $eksekusi = $this->m_model->ubah_data('user', $data, array('id'=>$this->input->post('id')));
-    if($eksekusi) {
-        $this->session->set_flashdata('sukses' , 'berhasil');
-        redirect(base_url('karyawan/akun'));
+        if (move_uploaded_file($foto_temp, $upload_path)) {
+            // Hapus foto lama jika ada
+            $old_file = $this->m_model->get_foto_by_id($this->input->post('id'));
+            if ($old_file && file_exists('../../image/' . $old_file)) {
+                unlink('../../image/' . $old_file);
+            }
+            $data = [
+                'foto' => $file_name,
+                'username' => $username,
+                'nama_depan' => $nama_depan,
+                'nama_belakang' => $nama_belakang,
+            ];
+        } else {
+            // Gagal mengunggah foto baru
+            redirect(base_url('karyawan/index'));
+        }
     } else {
-        $this->session->set_flashdata('error' , 'gagal...');
-       echo "error gais";
+        // Jika tidak ada foto yang diunggah
+        $data = [
+            'username' => $username,
+            'nama_depan' => $nama_depan,
+            'nama_belakang' => $nama_belakang,
+        ];
     }
-}
 
-public function hapus_image()
-{ 
-    $data = array(
-        'foto' => NULL
-    );
+    // Eksekusi dengan model ubah_data
+    $update_result = $this->m_model->update('user', $data, array('id' => $this->session->userdata('id')));
 
-    $eksekusi = $this->m_model->ubah_data('user', $data, array('id'=>$this->session->userdata('id')));
-    if($eksekusi) {
-        $this->session->set_flashdata('sukses' , 'berhasil');
+    if ($update_result) {
+        $this->session->set_flashdata('sukses','<div class="alert alert-success alert-dismissible fade show" role="alert">
+     Berhasil Merubah Profile
+               <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+           </div>');
         redirect(base_url('karyawan/akun'));
     } else {
-        $this->session->set_flashdata('error' , 'gagal...');
-       echo "error gais";
+        redirect(base_url('karyawan/index'));
+    }
+ 
+}
+public function upload_img($value)
+{
+    $kode = round(microtime(true) * 1000);
+    $config['upload_path'] = '../../image/';
+    $config['allowed_types'] = 'jpg|png|jpeg';
+    $config['max_size'] = '30000';
+    $config['file_name'] = $kode;
+    
+    $this->load->library('upload', $config); // Load library 'upload' with config
+    
+    if (!$this->upload->do_upload($value)) {
+        return array(false, '');
+    } else {
+        $fn = $this->upload->data();
+        $nama = $fn['file_name'];
+        return array(true, $nama);
     }
 }
 public function aksi_ubah_password()
@@ -209,7 +243,7 @@ public function aksi_ubah_password()
         'password' =>$this->input->post('password'),
         'username' => md5($this->input->post('username'))
     ];
-    $eksekusi = $this->m_model->ubah_data(  'user',  $data,   array('id ' => $this->input->post('id '))
+    $eksekusi = $this->m_model->update(  'user', $data,   array('id ' => $this->input->post('id '))
     );
     if ($eksekusi) {
        echo redirect(base_url('karyawan/akun'));
@@ -225,7 +259,7 @@ public function ubah_absen($id)
 public function aksi_ubah_absen()
 {
     $data =  [
-        'kegiatan' => $this->input->post('kegiatan'),
+        'kegiatan' => $this->input->post('kegiatan')
     ];
     $eksekusi = $this->m_model->ubah_data('absensi', $data, array('id'=>$this->input->post('id')));
     if($eksekusi) {
@@ -236,5 +270,61 @@ public function aksi_ubah_absen()
         redirect(base_url('karyawan/ubah_absen'.$this->input->post('id')));
     }
 }
+public function aksi_ubah_akun()
+    {
+        $password_baru = $this->input->post('password_baru');
+        $konfirmasi_password = $this->input->post('konfirmasi_password');
+        $email = $this->input->post('email');
+        $username = $this->input->post('username');
+        $nama_depan = $this->input->post('nama_depan'); // Tambahkan nama_depan
+        $nama_belakang = $this->input->post('nama_belakang'); // Tambahkan nama_belakang
+    
+        $data = [
+            'email' => $email,
+            'username' => $username,
+            'nama_depan' => $nama_depan, // Tambahkan nama_depan
+            'nama_belakang' => $nama_belakang, // Tambahkan nama_belakang
+        ];
+    
+        if (!empty($password_baru)) {
+            if ($password_baru === $konfirmasi_password) {
+                $data['password'] = md5($password_baru);
+            } else {
+                $this->session->set_flashdata('message', 'Password baru dan Konfirmasi password harus sama');
+                redirect(base_url('karyawan/profile'));
+            }
+        }   
+    
+        $this->session->set_userdata($data);
+        $update_result = $this->m_model->update('user', $data, ['id' => $this->session->userdata('id')]);
+    
+        if ($update_result) {
+            redirect(base_url('karyawan/profile'));
+        } else {
+            redirect(base_url('karyawan/profile'));
+        }
+    }
+    
+    public function aksi_ubah_foto()
+    {
+        $image = $this->upload_image('image'); 
+        
+        if ($image[0] === false) {
+            redirect(base_url('karyawan/profile'));
+        } else {
+            $data = [
+                'image' => $image[1],
+            ];
+            
+            $this->session->set_userdata('image', $data['image']);
+            $update_result = $this->m_model->update('user', $data, ['id' => $this->session->userdata('id')]);
+            
+            if ($update_result) {
+                redirect(base_url('karyawan/profile'));
+            } else {
+                redirect(base_url('karyawan/profile'));
+            }
+        }
+    }
 }
 ?>

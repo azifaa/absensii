@@ -20,11 +20,9 @@ class M_model extends CI_Model
         $this->db->insert($table, $data);
         return $this->db->insert_id();
     }
-    public function get_by_id($tabel, $id_column, $id)
-    {
-        $data = $this->db->where($id_column, $id)->get($tabel);
-        return $data;
-    }
+    public function get_by_id($table, $field, $id) {
+        return $this->db->get_where($table, array($field => $id))->row();
+    }    
     public function update($tabel, $data, $where)
     {
         $data = $this->db->update($tabel, $data, $where);
@@ -203,5 +201,20 @@ class M_model extends CI_Model
     public function count_bulanan($date) {
         $this->db->where("DATE_FORMAT(absensi.date, '%m') =", $date);
         return $this->db->count_all_results('absensi'); 
+    }
+    // foto lama
+    public function get_foto_by_id($id)
+    {
+        $this->db->select('foto');
+        $this->db->from('user');
+        $this->db->where('id', $id);
+        $query = $this->db->get();
+    
+        if ($query->num_rows() > 0) {
+            $result = $query->row();
+            return $result->f;
+        } else {
+            return false;
+        }
     }
 }

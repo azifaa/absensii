@@ -1,140 +1,146 @@
 <!DOCTYPE html>
-<!-- Coding By CodingNepal - codingnepalweb.com -->
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" 
+    integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous"> 
+    <style>
+        .img-account-profile {
+            height: 10rem;
+        }
+        .rounded-circle {
+            border-radius: 50% !important;
+        }
+        .card {
+            box-shadow: 0 0.15rem 1.75rem 0 rgb(33 40 50 / 15%);
+        }
+        .card .card-header {
+            font-weight: 500;
+        }
+        .card-header:first-child {
+            border-radius: 0.35rem 0.35rem 0 0;
+        }
+        .card-header {
+            padding: 1rem 1.35rem;
+            margin-bottom: 0;
+            background-color: rgba(33, 40, 50, 0.03);
+            border-bottom: 1px solid rgba(33, 40, 50, 0.125);
+        }
+        .form-control, .dataTable-input {
+            display: block;
+            width: 100%;
+            padding: 0.875rem 1.125rem;
+            font-size: 0.875rem;
+            font-weight: 400;
+            line-height: 1;
+            color: #69707a;
+            background-color: #fff;
+            background-clip: padding-box;
+            border: 1px solid #c5ccd6;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            border-radius: 0.35rem;
+            transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+        }
 
-    <!----======== CSS ======== -->
-    <link rel="stylesheet" href="style.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <!----===== Iconscout CSS ===== -->
-    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-    <!-- Script -->
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
-        integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous">
-        </script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
-        integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous">
-        </script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-    <title>Profile Account</title>
+        .nav-borders .nav-link.active {
+            color: #0061f2;
+            border-bottom-color: #0061f2;
+        }
+        .nav-borders .nav-link {
+            color: #69707a;
+            border-bottom-width: 0.125rem;
+            border-bottom-style: solid;
+            border-bottom-color: transparent;
+            padding-top: 0.5rem;
+            padding-bottom: 0.5rem;
+            padding-left: 0;
+            padding-right: 0;
+            margin-left: 1rem;
+            margin-right: 1rem;
+        }
+    </style>
 </head>
 <body>
-<?php $this->load->view('components/sidebar_karyawan'); ?>
-    <section class="dashboard">
-        <div class="top">
-            <i class="uil uil-bars sidebar-toggle"></i>
-        </div>
-        <div class="dash-content">
-        <div class="overview shadow-lg p-1 mb-3 bg-body rounded">
-            <div class="title ">
-             <span class="text ">Profile Account</span>
-
-            </div>
-        </div>
-        <div class="overview shadow-lg p-1 mb-3 bg-body rounded">
-        <?php $no = 0;
-        foreach ($user as $row):
-            $no++ ?>
-            <div class="  w-100 m-auto p-3 ">
-                <br>
-                <div>
-                    <?php $this->session->flashdata('message') ?>
-                </div>
-                <div class="row d-flex">
-                    <center>
-                        <button class="border border-0 btn btn-link" data-bs-toggle="modal"
-                            data-bs-target="#exampleModal">
-                             <?php if (!empty($row->foto)): ?>
-                                <img class="rounded-circle" height="150" width="150"
-                                    src="<?php echo base64_decode($row->foto); ?>">
-                            <?php else: ?>
-                                <img class="rounded-circle" height="150" width="150"
-                                    src="https://slabsoft.com/wp-content/uploads/2022/05/pp-wa-kosong-default.jpg" />
-                            <?php endif; ?>
-                        </button>
-                    </center>
-                    <br>
-                    <br>
-                    <form method="post" action="<?php echo base_url('admin/aksi_ubah_password') ?>"
-                        enctype="multipart/form_data">
-                        <input name="id_siswa" type="hidden" value="<?php echo $row->id ?>">
-                        <div class="d-flex flex-row ">
-                             <div class="p-2 col-6">
-                                <label for="" class="form-label fs-5 ">Email </label>
-                                <input type="text" class="form-control" id="email" name="email" placeholder="Email"
-                                    value="<?php echo $row->email ?>">
-                            </div>
-                                <div class="p-2 col-6">
-                                <label for="" class="form-label fs-5">Username </label>
-                                <input type="text" class="form-control" id="username" name="username"
-                                        placeholder="Username" value="<?php echo $row->username ?>">
-                            </div>
+    <div class="d-flex align-items-center">
+    <div class="container">
+    <div class="row">
+        <div class="col-xl-4">
+            <!-- Profile picture card-->
+            <div class="card mb-4 mb-xl-0">
+                <div class="card-header">Profile Picture</div>
+                <div class="card-body text-center">
+                <?php if (isset($user)) : ?>
+                    <img class="img-account-profile rounded-circle mb-2" src="<?php echo base_url('images/karyawan/' . $user->image); ?>" alt="Profile Picture">
+                <?php endif; ?>
+                    <div class="small font-italic text-muted mb-4">JPG or PNG no larger than 5 MB</div>
+                    <form action="<?php echo base_url('karyawan/aksi_ubah_foto')?>" method="post" class="row" enctype="multipart/form-data">
+                        <div class="mb-3">
+                            <label for="formFile" class="form-label">Default file input example</label>
+                            <input class="form-control" type="file" name="image" id="image" accept="image/*">
                         </div>
-                        <br>
-                        <br>
-                        <div class="d-flex flex-row ">
-                            <div class="p-2 col-6 >
-                         <label for=" nama="" class="form-label fs-5">Password Baru </label>
-                                <input type="text" class="form-control" id="password_baru" name="password_baru"
-                                    placeholder="Password Baru" value=>
-                            </div>
-                            <div class="p-2 col-6 >
-                         <label for=" nama="" class="form-label fs-5"> Konfirmasi </label>
-                                <input type="text" class="form-control" id="password_konfirmasi"
-                                    name="password_konfirmasi" placeholder="Konfirmasi Paswword" value=>
-                            </div>
-                        </div>
-                        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
-                            aria-hidden="true">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h1 class="modal-title fs-5" id="exampleModalLabel">Edit Foto Profile</h1>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                            aria-label="Close"></button>
-                                     </div>
-                                    <div class="container w-75 m p-3">
-                                        <form method="post"
-                                            action="<?php echo base_url('karyawan/upload_image'); ?>"
-                                            enctype="multipart/form-data" class="row">
-                                            <div class="mb-3 col-12">
-                                                <label for="nama" class="form-label">Foto:</label>
-                                                <input type="hidden" class="form-control" id="id" name="id"
-                                                    value="<?php echo $this->session->userdata('id'); ?>">
-                                                <input type="hidden" name="base64_image" id="base64_image">
-                                                <input class="form-control" type="file" name="userfile"
-                                                    id="userfile" accept="image/*">
-                                            </div>
-                                            <div class="col-12 text-end">
-                                                <input type="submit" class="btn btn-sm btn-primary px-3"
-                                                    name="submit" value="Ubah Foto"></input>
-                                            </div>
-                                        </form>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <a class="btn btn-danger"
-                                            href="<?php echo base_url('karyawan/hapus_image'); ?>">Hapus
-                                             Foto</a>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-                        <div class="flex justify-content-between">
-                            <div>
-                                    <button type="submit" class="btn btn-sm btn-dark" name=" submit">Confirm</button>
-                            </div>
-                        </div>
+                        <button class="btn btn-dark" type="submit">Upload new image</button>
                     </form>
-                <?php endforeach ?>
+                </div>
             </div>
-    </section>
-</body>
+        </div>
+        <div class="col-xl-8">
+            <!-- Account details card-->
+            <div class="card mb-4">
+                <div class="card-header">Account Details</div>
+                <div class="card-body">
+                    <form action="<?php echo base_url('karyawan/aksi_ubah_akun')?>" method="post" class="row" enctype="multipart/form-data">
+                        <!-- Form Group (username)-->
+                        <div class="mb-3">
+                            <label class="small mb-1" for="inputUsername">Username</label>
+                            <input type="text" class="form-control" value="<?php echo $user->username?>" id="username" name="username">
+                        </div>
+                        <div class="mb-3">
+                            <label class="small mb-1" for="inputEmailAddress">Email address</label>
+                            <input type="text" value="<?php echo $user->email ?>" class="form-control" id="email" name="email">
+                        </div>
+                        <!-- Form Row-->
+                        <div class="row gx-3 mb-3">
+                            <!-- Form Group (first name)-->
+                            <div class="col-md-6">
+                                <label class="small mb-1" for="inputFirstName">First name</label>
+                                <input type="text" class="form-control" value="<?php echo $user->nama_depan?>" id="nama_depan" name="nama_depan">
+                            </div>
+                            <!-- Form Group (last name)-->
+                            <div class="col-md-6">
+                                <label class="small mb-1" for="inputLastName">Last name</label>
+                                <input type="text" class="form-control" value="<?php echo $user->nama_belakang?>" id="nama_belakang" name="nama_belakang">
+                            </div>
+                        </div>
+                        <!-- Form Row        -->
+                        <div class="row gx-3 mb-3">
+                            <!-- Form Group (organization name)-->
+                            <div class="col-md-6">
+                                <label class="small mb-1" for="inputOrgName">Password Baru</label>
+                                <input type="text" class="form-control" id="password_baru" name="password_baru">
+                            </div>
+                            <!-- Form Group (location)-->
+                            <div class="col-md-6">
+                                <label class="small mb-1" for="inputLocation">Konfirmasi Password</label>
+                                <input type="text" class="form-control" id="konfirmasi_password" name="konfirmasi_password">
+                            </div>
+                        </div>
+                        <!-- Save changes button-->
+                        <button class="btn btn-dark" type="submit">Save changes</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    </div>
+        <!-- penghubung dashboard -->
+        </div>
+        </div>
+      </div>
+    </div>
+</body> 
 </html>

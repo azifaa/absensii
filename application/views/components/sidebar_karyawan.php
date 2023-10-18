@@ -541,15 +541,12 @@
 
             <span class="logo_name">Karyawan</span>
         </div>
-
-
         <div class="menu-items">
             <ul class="nav-links" style="padding-left:16px;">
                 <li><a href="<?php echo base_url('karyawan/index') ?>">
                         <i class="fa-solid fa-house"></i>
                         <span class="link-name">Dashboard</span>
                     </a></li>
-
                 <li><a href="<?php echo base_url('karyawan/history') ?>">
                         <i class="fa-solid fa-clock-rotate-left"></i>
 
@@ -563,23 +560,18 @@
                         <i class="fa-solid fa-i"></i>
                         <span class="link-name">Izin</span>
                     </a></li>
-
                 <li><a href="<?php echo base_url('karyawan/akun') ?>">
                         <i class="fa-solid fa-circle-user"></i>
                         <span class="link-name">Edit Profil</span>
                     </a></li>
                 <hr>
                 <li class="logout-mode  ">
-
                 <li>
-
                     <span id="clock" name="date" class="text-white link-name"> </span>
-
                 </li>
                 <li>
                     <span id="clock2" name="date2" class="text-dark link-name"> </span>
                 </li>
-
                 <li><button class="btn btn-lg   " onclick="logout(id)">
                         <i class="fa-solid fa-right-from-bracket"></i>
                         <span class="link-name">Keluar</span>
