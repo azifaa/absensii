@@ -69,7 +69,7 @@ color: #fff;
                    NAMA KARYAWAN
                   </th>
                   <th class="px-3 py-2 text-xs text-gray-500">USERNAME</th>
-                  <th class="px-3 py-2 text-xs text-gray-500">AKSI</th>
+                  <!-- <th class="px-3 py-2 text-xs text-gray-500">AKSI</th> -->
                 </tr>
               </thead>
               <tbody class="bg-white divide-y divide-gray-300">
@@ -86,7 +86,7 @@ color: #fff;
                       <?php echo $row->username?>
                       </div>
                     </td>
-                    <td class="px-3 py-4">
+                    <!-- <td class="px-3 py-4">
                       <div class="text-sm text-gray-900">
                       <a href="<?php echo base_url('admin/detail_karyawan/'). $row->id?>">
                           <button class="text-blue-600">
@@ -94,7 +94,7 @@ color: #fff;
                           </button>
                       </a>
                       </div>
-                    </td>
+                    </td> -->
                   </tr>
                   <?php endforeach?>
               </tbody>

@@ -264,15 +264,35 @@
                     <div class="field">
                         <input type="password" name="password" placeholder="Password" required>
                     </div>
-
-                    <div class="field btn">
-                        <div class="btn-layer"></div>
-                        <input type="submit" value="Register">
+                    <div class="field">
+                        <label for="exampleFormControlInput1" class="form-label"></label>
+                        <input type="password" class="form-control" id="password" placeholder="Password" name="password">
+                        <small style="color:red">*password minimal 8 karakter!</small>
                     </div>
+                    <br>
+                    <input type="checkbox" id="showPassword"> Show Password
+                    <br>
+
+                <div class="field btn">
+                    <div class="btn-layer"></div>
+                    <input type="submit" value="Register">
+                </div>
                 </form>
             </div>
         </div>
     </div>
+    <script>
+        const passwordField = document.getElementById("password");
+        const showPasswordCheckbox = document.getElementById("showPassword");
+
+        showPasswordCheckbox.addEventListener("change", function () {
+            if (showPasswordCheckbox.checked) {
+                passwordField.type = "text";
+            } else {
+                passwordField.type = "password";
+            }
+        });
+    </script>
 </body>
 
 </html>

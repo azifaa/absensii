@@ -8,6 +8,7 @@ class karyawan extends CI_Controller
         parent::__construct();
         $this->load->model('m_model');
         $this->load->helper('my_helper');
+        $this->load->library('upload');
         if ($this->session->userdata('logged_in') != true || $this->session->userdata('role') != 'karyawan') {
              redirect(base_url() . 'auth/login');
      }
@@ -251,17 +252,23 @@ public function aksi_ubah_password()
       echo 'erorr';
     }
 }
+// public function ubah_absen($id)
+// {
+//     $data['absen'] = $this->m_model->get_by_id('absensi', 'id', $id);
+//     $this->load->view('karyawan/ubah_absen', $data);
+// }
+
 public function ubah_absen($id)
-{
-    $data['absen'] = $this-> m_model->get_by_id('absensi' , 'id', $id)->result();
-    $this->load->view('karyawan/ubah_absen',$data);
-}
+ {
+  $data['absensi']=$this->m_model->get_by_id('absensi', 'id', $id);
+  $this->load->view('karyawan/ubah_absen', $data);
+ }
 public function aksi_ubah_absen()
 {
     $data =  [
         'kegiatan' => $this->input->post('kegiatan')
     ];
-    $eksekusi = $this->m_model->ubah_data('absensi', $data, array('id'=>$this->input->post('id')));
+    $eksekusi = $this->m_model->update('absensi', $data, array('id'=>$this->input->post('id')));
     if($eksekusi) {
         $this->session->set_flashdata('sukses' , 'berhasil');
         redirect(base_url('karyawan/history'));
@@ -299,9 +306,9 @@ public function aksi_ubah_akun()
         $update_result = $this->m_model->update('user', $data, ['id' => $this->session->userdata('id')]);
     
         if ($update_result) {
-            redirect(base_url('karyawan/profile'));
+            redirect(base_url('karyawan/akun'));
         } else {
-            redirect(base_url('karyawan/profile'));
+            redirect(base_url('karyawan/akun'));
         }
     }
     
@@ -320,11 +327,29 @@ public function aksi_ubah_akun()
             $update_result = $this->m_model->update('user', $data, ['id' => $this->session->userdata('id')]);
             
             if ($update_result) {
-                redirect(base_url('karyawan/profile'));
+                redirect(base_url('karyawan/akun'));
             } else {
-                redirect(base_url('karyawan/profile'));
+                redirect(base_url('karyawan/akun'));
             }
         }
     }
+    public function upload_image($value)
+    {
+        $kode = round(microtime(true) * 1000);
+        $config['upload_path'] = './images/karyawan/';
+        $config['allowed_types'] = 'jpg|png|jpeg';
+        $config['max_size'] = 30000;
+        $config['file_name'] = $kode;
+        $this->upload->initialize($config);
+        if (!$this->upload->do_upload($value)) {
+            return array(false, '');
+        } else {
+            $fn = $this->upload->data();
+            $nama = $fn['file_name'];
+            return array(true, $nama);
+        }
+    }
+
+
 }
 ?>

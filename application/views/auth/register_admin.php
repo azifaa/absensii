@@ -243,40 +243,47 @@
         <div class="form-inner">
             <form action="<?php echo base_url('auth/aksi_register_admin'); ?>" method="post">
                 <div class="field">
-                   
+
                     <input type="text" name="username" placeholder="Username" required>
                 </div>
                 <div class="field">
-                   
+
                     <input type="text" name="email" placeholder="Email" required>
                 </div>
                 <div class="field">
-                   
+
                     <input type="text" name="nama_depan" placeholder="Nama Depan" required>
                 </div>
                 <div class="field">
-                    
                     <input type="text" name="nama_belakang" placeholder="Nama Belakang" required>
                 </div>
                 <div class="field">
-                  
-                    <input type="password" name="password" placeholder="Password" required>
-                    <small style="color:red">Kata sandi minimal harus 8 karakter!</small>
-                </div>
-                <!-- <label for="image">Profil</label>
-                                    <input type="file" class="form-control" id="image" name="image">
-                                    <label for="role">Role</label>
-                                    <select id="role" name="role" class="form-control" required> 
-
-                <option value="karyawan">karyawan</option>
-                </select>  -->
-                <div class="field btn">
-                        <div class="btn-layer"></div>
-                        <input type="submit" value="Register">
+                    <label for="exampleFormControlInput1" class="form-label"></label>
+                    <input type="password" class="form-control" id="password" placeholder="Password" name="password">
+                    <small style="color:red">*password minimal 8 karakter!</small>
                     </div>
+                    <br>
+                <input type="checkbox" id="showPassword"> Show Password
+                <br>
+                <div class="field btn">
+                    <div class="btn-layer"></div>
+                    <input type="submit" value="Register">
+                </div>
         </div>
     </div>
     </div>
+    <script>
+        const passwordField = document.getElementById("password");
+        const showPasswordCheckbox = document.getElementById("showPassword");
+
+        showPasswordCheckbox.addEventListener("change", function () {
+            if (showPasswordCheckbox.checked) {
+                passwordField.type = "text";
+            } else {
+                passwordField.type = "password";
+            }
+        });
+    </script>
 </body>
 
 </html>
