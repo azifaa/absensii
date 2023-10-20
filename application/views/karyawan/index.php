@@ -38,7 +38,7 @@
                     <div class="card  rounded " style="width: 16rem;height:11rem; margin-left:20px;">
                         <p class=" fs-6 text-white text-center p-3 bg-dark">Total <br> Masuk</p>
 
-                        <p class=" fs-1 text-dark text-center">43</p>
+                        <p class=" fs-1 text-dark text-center">10</p>
                     </div>
                     <div class="card  rounded " style="width: 16rem;height:11rem; margin-left:20px;">
                         <p class=" fs-6 text-white text-center p-3 bg-dark">Total <br> Izin</p>
@@ -47,9 +47,9 @@
                     </div>
                     <div class="card  rounded" style="width: 16rem;height:11rem; margin-left:20px;">
                         <p class=" fs-6 text-white text-center p-3 bg-dark">Total
-                            <br>Cuti
+                            <br>Keseluruhan
                         </p>
-                        <p class=" fs-1 text-dark text-center">8</p>
+                        <p class=" fs-1 text-dark text-center">16</p>
                     </div>
                 </div>
             </div>

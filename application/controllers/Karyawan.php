@@ -165,59 +165,57 @@ public function akun()
 
 }
 // update profile
-public function aksi_update_profile()
-{
-    $foto = $_FILES['foto']['name'];
-    $foto_temp = $_FILES['foto']['tmp_name'];
+public function aksi_ubah_profil() {
+    // Mengambil input dari formulir
+    $email = $this->input->post('email');
     $username = $this->input->post('username');
     $nama_depan = $this->input->post('nama_depan');
     $nama_belakang = $this->input->post('nama_belakang');
-    // $foto = $this->upload_img('foto');
-    // Jika ada foto yang diunggah
-    if ($foto) {
-        $kode = round(microtime(true) * 900);
-        $file_name = $kode . '_' . $foto;
-        $upload_path = './image/' . $file_name;
+    $password_baru = $this->input->post('password_baru');
+    $konfirmasi_password = $this->input->post('konfirmasi_password');
+    $password_lama = $this->input->post('password_lama'); // Tambahkan input password lama
 
-        if (move_uploaded_file($foto_temp, $upload_path)) {
-            // Hapus foto lama jika ada
-            $old_file = $this->m_model->get_foto_by_id($this->input->post('id'));
-            if ($old_file && file_exists('../../image/' . $old_file)) {
-                unlink('../../image/' . $old_file);
-            }
-            $data = [
-                'foto' => $file_name,
-                'username' => $username,
-                'nama_depan' => $nama_depan,
-                'nama_belakang' => $nama_belakang,
-            ];
-        } else {
-            // Gagal mengunggah foto baru
-            redirect(base_url('karyawan/index'));
-        }
-    } else {
-        // Jika tidak ada foto yang diunggah
-        $data = [
-            'username' => $username,
-            'nama_depan' => $nama_depan,
-            'nama_belakang' => $nama_belakang,
-        ];
+    // Mengambil data pengguna dari database berdasarkan ID pengguna yang disimpan dalam sesi
+    $user_data = $this->m_model->getwhere('user', array('id' => $this->session->userdata('id')))->row_array();
+
+    // Validasi password lama
+    if (md5($password_lama) !== $user_data['password']) {
+        $error_password_lama = '*Password lama salah' ; // Pesan kesalahan
+        $this->session->set_flashdata('error_password_lama', '*Password lama salah');
+        redirect(base_url('karyawan/profil'));
     }
 
-    // Eksekusi dengan model ubah_data
-    $update_result = $this->m_model->update('user', $data, array('id' => $this->session->userdata('id')));
+    // Buat data yang akan diubah
+    $data = array(
+        'email' => $email,
+        'username' => $username,
+        'nama_depan' => $nama_depan,
+        'nama_belakang' => $nama_belakang
+    );
+
+    // Jika ada password baru
+    if (!empty($password_baru)) {
+        // Pastikan password baru dan konfirmasi password sama
+        if ($password_baru === $konfirmasi_password) {
+            // Hash password baru
+            $data['password'] = md5($password_baru);
+        } else {
+            $this->session->set_flashdata('konfirmasi_password', '*Password baru dan konfirmasi password harus sama');
+            redirect(base_url('karyawan/profil'));
+        }
+    }
+
+    $this->session->set_userdata($data);
+    $update_result = $this->m_model->ubah_data('user', $data, array('id' => $this->session->userdata('id')));
 
     if ($update_result) {
-        $this->session->set_flashdata('sukses','<div class="alert alert-success alert-dismissible fade show" role="alert">
-     Berhasil Merubah Profile
-               <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-           </div>');
-        redirect(base_url('karyawan/akun'));
+        redirect(base_url('karyawan/profil'));
     } else {
-        redirect(base_url('karyawan/index'));
+        echo 'error';
+        // redirect(base_url('karyawan/profil'));
     }
- 
 }
+// Upload i
 public function upload_img($value)
 {
     $kode = round(microtime(true) * 1000);

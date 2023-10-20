@@ -232,7 +232,7 @@
     <div class="wrapper">
         <div class="title-text">
             <div class="title login">
-                Register Form
+                Register Admin
             </div>
             <div class="title signup">
                 Login Form

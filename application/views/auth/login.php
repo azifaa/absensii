@@ -244,13 +244,14 @@
                 </div>
                 <div class="field">
                         <label for="exampleFormControlInput1" class="form-label"></label>
-                        <input type="password" class="form-control" id="password" placeholder="Password" name="password">
-                        <small style="color:red">*password minimal 8 karakter!</small>
+                        <input type="password" class="form-control" id="password" placeholder="Password"
+                            name="password">
                     </div>
-                    <br>
+                    <!-- <p>*Password minimal 8</p> -->
+
                     <input type="checkbox" id="showPassword"> Show Password
                     <br>
-                <div class="field btn">
+                    <div class="field btn">
                     <div class="btn-layer"></div>
                     <input type="submit">
                 </div>
