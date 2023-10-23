@@ -82,7 +82,7 @@
     <nav class="navbar">
         <!-- Navbar content goes here -->
     </nav>
-    <?php $this->load->view('components/sidebar_karyawan'); ?>
+
 
     <div class="d-flex align-items-center">
         <div class="container">

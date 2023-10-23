@@ -572,6 +572,7 @@
                 <li>
                     <span id="clock2" name="date2" class="text-dark link-name"> </span>
                 </li>
+                <br><br> <br><br> <br><br> <br><br> <br><br> <br><br> <br><br> <br>
                 <li><button class="btn btn-lg   " onclick="logout(id)">
                         <i class="fa-solid fa-right-from-bracket"></i>
                         <span class="link-name">Keluar</span>

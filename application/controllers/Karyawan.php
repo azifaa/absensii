@@ -20,7 +20,7 @@ class karyawan extends CI_Controller
             'title' => 'Dashboard Karyawan', // Judul halaman
             'content' => 'Selamat datang di dashboard karyawan.', // Konten halaman
         );
-
+        $data['absensi'] = $this->m_model->get_absensi_data();
         // Menampilkan tampilan (sesuaikan dengan nama tampilan Anda)
         $this->load->view('karyawan/index', $data);
     }
@@ -60,21 +60,38 @@ public function absensi()
 }
 public function save_absensi()
 {
+    $id_karyawan = $this->session->userdata('id');
     date_default_timezone_set('Asia/Jakarta');
     $current_datetime = date('Y-m-d H:i:s');
 
+    $tanggal = date('Y-m-d', strtotime($current_datetime));
+    $jam = date('H:i:s', strtotime($current_datetime));
+
+    // Ambil nilai $keterangan dari formulir POST
+    $keterangan_izin = $this->input->post('keterangan_izin');
+
+    // Periksa apakah $keterangan memiliki nilai, jika tidak, beri nilai default (misalnya, '')
+    if ($keterangan_izin === NULL) {
+        $keterangan_izin = '';
+    }
+
     $data = [
+        'id_karyawan' => $id_karyawan, 
         'kegiatan' => $this->input->post('kegiatan'),
-        'date' => $current_datetime,
-        'jam_masuk' => $current_datetime,
-        'jam_pulang' => $current_datetime,
-    ];
+        'date' => $tanggal,
+        'jam_masuk' => $jam,
+        'jam_pulang' => '',
+        'keterangan_izin' => $keterangan_izin,
+        'status' => 'Not',
+    ];        
 
     $this->load->model('Absensi_model');
     $this->Absensi_model->createAbsensi($data);
 
     redirect('karyawan/history');
 }
+
+// untuk aksi izin
 public function tambah_absen()
     {
         $this->load->view('karyawan/tambah_absen');

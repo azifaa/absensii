@@ -31,14 +31,12 @@
         }
 
         .wrapper {
-            overflow: hidden;
-            max-width: 390px;
-            background: #fff;
-            padding: 30px;
-            border-radius: 5px;
-            box-shadow: 0px 15px 20px rgba(0, 0, 0, 0.1);
-        }
-
+    max-width: 500px; /* Increase the max-width for a larger card */
+    padding: 60px; /* Increase the padding for a larger card */
+    border-radius: 15px; /* Adjust the border-radius for a larger card */
+    box-shadow: 0px 20px 25px rgba(0, 0, 0, 0.1); /* Adjust the shadow for a larger card */
+    background-color: #fff; /* Set the background color to white */
+}
         .wrapper .title-text {
             display: flex;
             width: 200%;
@@ -243,15 +241,14 @@
                     <input type="text" name="email" placeholder="Email" required>
                 </div>
                 <div class="field">
-                        <label for="exampleFormControlInput1" class="form-label"></label>
-                        <input type="password" class="form-control" id="password" placeholder="Password"
-                            name="password">
-                    </div>
-                    <!-- <p>*Password minimal 8</p> -->
+                    <label for="exampleFormControlInput1" class="form-label"></label>
+                    <input type="password" class="form-control" id="password" placeholder="Password" name="password">
+                </div>
+                <!-- <p>*Password minimal 8</p> -->
 
-                    <input type="checkbox" id="showPassword"> Show Password
-                    <br>
-                    <div class="field btn">
+                <input type="checkbox" id="showPassword"> Show Password
+                <br>
+                <div class="field btn">
                     <div class="btn-layer"></div>
                     <input type="submit">
                 </div>
@@ -259,22 +256,22 @@
                     <p>Belum punya akun?<a href='<?php echo base_url('auth/register_karyawan'); ?>' style=color:black>
                             Register</a>
                     </p>
-                </div> 
+                </div>
             </form>
         </div>
     </div>
     </div>
     <script>
-    const passwordField = document.getElementById("password");
-    const showPasswordCheckbox = document.getElementById("showPassword");
+        const passwordField = document.getElementById("password");
+        const showPasswordCheckbox = document.getElementById("showPassword");
 
-    showPasswordCheckbox.addEventListener("change", function() {
-        if (showPasswordCheckbox.checked) {
-            passwordField.type = "text";
-        } else {
-            passwordField.type = "password";
-        }
-    });
+        showPasswordCheckbox.addEventListener("change", function () {
+            if (showPasswordCheckbox.checked) {
+                passwordField.type = "text";
+            } else {
+                passwordField.type = "password";
+            }
+        });
     </script>
 </body>
 

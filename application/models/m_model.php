@@ -170,6 +170,25 @@ class M_model extends CI_Model
         $query = $this->db->get('absensi');
         return $query->result();
     }
+    public function getPerHari($tanggal)
+        {
+            $this->db->select('absensi.id, absensi.date, absensi.kegiatan, absensi.id_karyawan, absensi.jam_masuk, absensi.jam_pulang, absensi.keterangan_izin');
+            $this->db->from('absensi');
+            $this->db->where('absensi.date', $tanggal); // Menyaring data berdasarkan tanggal
+            $query = $this->db->get();
+            return $query->result_array();
+        }
+        public function get_data_perhari() {
+            $this->db->select('*');
+            $this->db->from('absensi');
+            $query = $this->db->get();
+            
+            if ($query->num_rows() > 0) {
+                return $query->result_array();
+            } else {
+                return array(); // Mengembalikan array kosong jika tidak ada data
+            }
+        }
     // Absen Page
     public function count_absen()
     {
@@ -214,6 +233,15 @@ class M_model extends CI_Model
             return $result->f;
         } else {
             return false;
+        }
+    }
+    public function get_absensi_data() {
+        $query = $this->db->get('absensi'); // Misalnya, tabel absensi disimpan dalam database
+
+        if ($query->num_rows() > 0) {
+            return $query->result(); // Mengembalikan data absensi sebagai objek
+        } else {
+            return array(); // Mengembalikan array kosong jika tidak ada data
         }
     }
 }

@@ -55,7 +55,6 @@
                         <?php echo $karyawan; ?> Orang
                     </div>
                 </div>
-
                 <div class="py-2 bg-white">
                     <p class="text-md text-center font-medium">
                         TOTAL ABSEN

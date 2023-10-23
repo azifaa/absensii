@@ -42,46 +42,42 @@ class Admin extends CI_Controller {
 		$this->load->view('admin/karyawan',$data);
 	}
     // rekap bulanan
-    public function rekap_bulanan()
-    {
-        $this->load->library('pagination');
-        $bulan = date('m');
-        $config = array(
-            'base_url' => site_url('admin/rekap_bulanan'),
-            'total_rows' => $this->m_model->count_bulanan($bulan),
-            'per_page' => 10,
-            'num_links' => 4,
-            'use_page_numbers' => TRUE,
-        );
-        $config['full_tag_open'] = '<div class="pagination">';
-        $config['full_tag_close'] = '</div>';
-        
-        $this->pagination->initialize($config);
-        $page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 1;
-        $data['data_bulanan'] = $this->m_model->get_bulanan_page($config['per_page'], ($page - 1) * $config['per_page'],$bulan);
-        $data['links'] = $this->pagination->create_links();
-    $this->load->view('admin/rekap_bulanan', $data);
+    public function rekap_bulanan() {
+        $bulan = $this->input->post('bulan'); // Mengambil bulan dari input form
+        $data['absensi'] = $this->m_model->get_bulanan($bulan); // Ganti dengan fungsi yang sesuai
+        $this->session->set_flashdata('bulan', $bulan);
+        $this->load->view('admin/rekap_bulanan', $data);
     }
     // rekap harian
     public function rekap_harian()
-    {
-        $tanggal = date('Y-m-d');
-     $config = array(
-            'base_url' => site_url('admin/rekap_harian'),
-            'total_rows' => $this->m_model->count_harian($tanggal),
-            'per_page' => 10,
-            'num_links' => 4,
-            'use_page_numbers' => TRUE,
-        );
-        $config['full_tag_open'] = '<div class="pagination">';
-        $config['full_tag_close'] = '</div>';
-        
-        $this->load->library('pagination');
-        $page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 1;
-        $data['data_harian'] = $this->m_model->get_harian_page($config['per_page'], ($page - 1) * $config['per_page'], $tanggal);
-        $data['links'] = $this->pagination->create_links();
+{
+    $this->load->library('pagination'); // Memuat pustaka pagination
+
+    $tanggal = date('Y-m-d');
+    $config = array(
+        'base_url' => site_url('admin/rekap_harian'),
+        'total_rows' => $this->m_model->count_harian($tanggal),
+        'per_page' => 10,
+        'num_links' => 4,
+        'use_page_numbers' => TRUE,
+    );
+    $config['full_tag_open'] = '<div class="pagination">';
+    $config['full_tag_close'] = '</div>';
+
+    $this->pagination->initialize($config); // Menginisialisasi objek pagination
+
+    $page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 1;
+    $data['data_harian'] = $this->m_model->get_harian_page($config['per_page'], ($page - 1) * $config['per_page'], $tanggal);
+    $data['links'] = $this->pagination->create_links();
+
     $this->load->view('admin/rekap_harian', $data);
-    }
+}
+
+public function rekapPerHari() {
+    $tanggal = $this->input->get('tanggal');
+          $data['perhari'] = $this->m_model->getPerHari($tanggal);
+          $this->load->view('admin/rekap_harian', $data);
+      }
     // rekap mingguan
     public function rekap_mingguan() {
         $data['absensi'] = $this->m_model->get_mingguan(); 

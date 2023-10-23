@@ -45,6 +45,7 @@
                     <thead>
                         <tr>
                             <th scope="col">No</th>
+                            <th scope="col">Nama Karyawan</th>
                             <th scope="col">Kegiatan</th>
                             <th scope="col">Tanggal</th>
                             <th scope="col">Jam Masuk</th>
@@ -58,9 +59,10 @@
                         <?php $i = 1; ?>
                         <?php foreach ($absensi as $row): ?>
                             <tr>
-                                <td><span class="number">
-                                        <?php echo $i; ?>
-                                    </span></td>
+                            <td><?php echo $i; ?></td>
+                                    <td class="px-3 py-4 text-sm text-gray-500 uppercase">
+                                        <?php echo tampil_nama_karawan_byid($row['id_karyawan']) ?>
+                                    </td>
                                 <td>
                                     <?php echo $row['kegiatan']; ?>
                                 </td>
@@ -99,10 +101,6 @@
                                         $row['id']; ?>" type="button" class="btn btn-primary">
                                         <i class="fa-solid fa-pen-to-square"></i>
                                     </a>
-                                    <!-- HAPUS -->
-                                    <button onClick="hapus(<?php echo $row['id']; ?>)" type="button"
-                                        class="btn btn-danger"><i class="fa-solid fa-trash"></i></button>
-
                                 </td>
                             </tr>
                             <?php $i++; ?>
@@ -146,8 +144,6 @@
 
         var currentTime = new Date();
         var hours = currentTime.getHours();
-        var minutes = currentTime.getMinutes();
-        var seconds = currentTime.getSeconds();
         var formattedTime = (hours < 10 ? "0" : "") + hours + ":" + (minutes < 10 ? "0" : "") + minutes + ":" + (
             seconds < 10 ? "0" : "") + seconds;
 

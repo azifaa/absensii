@@ -32,13 +32,12 @@
         }
 
         .wrapper {
-            overflow: hidden;
-            max-width: 390px;
-            background: #fff;
-            padding: 30px;
-            border-radius: 5px;
-            box-shadow: 0px 15px 20px rgba(0, 0, 0, 0.1);
-        }
+    max-width: 500px; /* Increase the max-width for a larger card */
+    padding: 40px; /* Increase the padding for a larger card */
+    border-radius: 15px; /* Adjust the border-radius for a larger card */
+    box-shadow: 0px 20px 25px rgba(0, 0, 0, 0.1); /* Adjust the shadow for a larger card */
+}
+
 
         .wrapper .title-text {
             display: flex;
