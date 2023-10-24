@@ -101,9 +101,34 @@ color: #fff;
             </table>
           </div>
         </div>
-
       </main>
     </div>
-</body>
+    <script>
+    function hapus(id) {
+        swal.fire({
+            title: 'Yakin untuk menghapus data ini?',
+            text: "Data ini akan terhapus permanen",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            cancelButtonText: 'Batal',
+            confirmButtonText: 'Ya Hapus'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Berhasil Dihapus',
+                    showConfirmButton: false,
+                    timer: 1500,
 
+                }).then(function() {
+                    window.location.href = "<?php echo base_url('admin/hapus_karyawan/')?>" + id;
+                });
+            }
+        });
+    }
+    </script>
+
+</body>
 </html>

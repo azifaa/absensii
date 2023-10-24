@@ -41,6 +41,26 @@ class Admin extends CI_Controller {
         $data['links'] = $this->pagination->create_links();
 		$this->load->view('admin/karyawan',$data);
 	}
+    public function hapus_karyawan($id)
+{
+   $this->m_model->delete('user', 'id', $id);
+    redirect(base_url('admin/data_karyawan'));
+}
+public function hapus_absen($id)
+{ 
+    $this->m_model->delete('absen', 'id_karyawan', $id); 
+    switch($this->uri->segment(2)){
+        case 'rekap_keseluruhan':
+            redirect(base_url('admin/rekap_keseluruhan')); 
+        case 'rekap_harian':
+            redirect(base_url('admin/rekap_harian')); 
+        case 'rekap_mingguan':
+            redirect(base_url('admin/rekap_mingguan'));
+        default:
+        redirect(base_url('admin/rekap_mingguan')); 
+    }
+}
+
     // rekap bulanan
     public function rekap_bulanan() {
         $bulan = $this->input->post('bulan'); // Mengambil bulan dari input form

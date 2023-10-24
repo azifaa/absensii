@@ -103,6 +103,9 @@
                                     <label for="formFile" class="form-label">Default file input example</label>
                                     <input class="form-control" type="file" name="image" id="image" accept="image/*">
                                 </div>
+                                <div id="image-preview" style="display: none;">
+                                    <img id="preview" style="max-width: 100px; max-height: 100px;">
+                                </div>
                                 <button class="btn btn-dark" type="submit">Upload new image</button>
                             </form>
                         </div>
@@ -180,6 +183,24 @@
     </div>
     </div>
     </div>
+    <script>
+        // JavaScript untuk menampilkan preview gambar saat memilih gambar
+        const imageInput = document.getElementById('image');
+        const imagePreview = document.getElementById('image-preview');
+        const preview = document.getElementById('preview');
+
+        imageInput.addEventListener('change', function () {
+            const file = imageInput.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    preview.src = e.target.result;
+                    imagePreview.style.display = 'block';
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+    </script>
 </body>
 
 </html>

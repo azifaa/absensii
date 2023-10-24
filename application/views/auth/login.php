@@ -31,12 +31,18 @@
         }
 
         .wrapper {
-    max-width: 500px; /* Increase the max-width for a larger card */
-    padding: 60px; /* Increase the padding for a larger card */
-    border-radius: 15px; /* Adjust the border-radius for a larger card */
-    box-shadow: 0px 20px 25px rgba(0, 0, 0, 0.1); /* Adjust the shadow for a larger card */
-    background-color: #fff; /* Set the background color to white */
-}
+            max-width: 500px;
+            /* Increase the max-width for a larger card */
+            padding: 60px;
+            /* Increase the padding for a larger card */
+            border-radius: 15px;
+            /* Adjust the border-radius for a larger card */
+            box-shadow: 0px 20px 25px rgba(0, 0, 0, 0.1);
+            /* Adjust the shadow for a larger card */
+            background-color: #fff;
+            /* Set the background color to white */
+        }
+
         .wrapper .title-text {
             display: flex;
             width: 200%;
@@ -241,13 +247,12 @@
                     <input type="text" name="email" placeholder="Email" required>
                 </div>
                 <div class="field">
-                    <label for="exampleFormControlInput1" class="form-label"></label>
-                    <input type="password" class="form-control" id="password" placeholder="Password" name="password">
-                </div>
+                        <input type="password" class="form-control" id="password" placeholder="Password"
+                            name="password">
+                        <i class="fas fa-eye-slash" id="toggle-password"></i>
+                    </div>
                 <!-- <p>*Password minimal 8</p> -->
-
-                <input type="checkbox" id="showPassword"> Show Password
-                <br>
+            
                 <div class="field btn">
                     <div class="btn-layer"></div>
                     <input type="submit">
@@ -262,16 +267,20 @@
     </div>
     </div>
     <script>
-        const passwordField = document.getElementById("password");
-        const showPasswordCheckbox = document.getElementById("showPassword");
+    $(document).ready(function() {
+        $('#toggle-password').click(function() {
+            var passwordField = $('#password');
+            var passwordToggle = $(this);
 
-        showPasswordCheckbox.addEventListener("change", function () {
-            if (showPasswordCheckbox.checked) {
-                passwordField.type = "text";
+            if (passwordField.attr('type') === 'password') {
+                passwordField.attr('type', 'text');
+                passwordToggle.removeClass('fa-eye-slash').addClass('fa-eye');
             } else {
-                passwordField.type = "password";
+                passwordField.attr('type', 'password');
+                passwordToggle.removeClass('fa-eye').addClass('fa-eye-slash');
             }
         });
+    });
     </script>
 </body>
 
