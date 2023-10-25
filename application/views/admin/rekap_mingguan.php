@@ -36,6 +36,7 @@
                         <thead class="bg-gray-50">
                             <tr>
                                 <th class="px-3 py-2 text-xs text-gray-500">NO</th>
+                                <th class="px-3 py-2 text-xs text-gray-500">NAMA KARYAWAN</th>
                                 <th class="px-3 py-2 text-xs text-gray-500">
                                     KEGIATAN
                                 </th>
@@ -43,12 +44,14 @@
                                 <th class="px-3 py-2 text-xs text-gray-500">JAM MASUK</th>
                                 <th class="px-3 py-2 text-xs text-gray-500">JAM PULANG</th>
                                 <th class="px-3 py-2 text-xs text-gray-500">KETERANGAN IZIN</th>
+                                <th class="px-3 py-2 text-xs text-gray-500">STATUS</th>
                             </tr>
                         </thead>
                         <tbody class="bg-white divide-y divide-gray-300">
                             <?php $no=0; foreach ($absensi as $absen): $no++ ?>
                             <tr class="whitespace-nowrap">
                                 <td class="px-3 py-4 text-sm text-gray-500"><?php echo $no ?></td>
+                                <td class="px-3 py-4 text-sm text-gray-500 uppercase"><?php echo tampil_nama_karawan_byid($absen['id_karyawan']) ?></td>
                                 <td class="px-3 py-4">
                                     <div class="text-sm text-gray-900">
                                         <?php echo $absen['kegiatan']; ?>
@@ -74,6 +77,11 @@
                                         <?php echo $absen['keterangan_izin']; ?>
                                     </div>
                                 </td>
+                                <td class="px-3 py-4">
+                            <div class="text-sm text-gray-900">
+                            <?php echo $absen['status'] ?>
+                        </div>
+                        </td>
                             </tr>
                             <?php endforeach?>
                         </tbody>
@@ -82,7 +90,24 @@
             </div>
         </main>
     </div>
-
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+<!-- HAPUS -->
+<script>
+    function hapus(id) {
+        Swal.fire({
+            title: 'Apakah Kamu Ingin Menghapusnya?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Ya, Hapus!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = "<?php echo base_url('admin/hapus_karyawan/') ?>" + id;
+            }
+        });
+    }
+</script>
     <script>
     document.addEventListener("DOMContentLoaded", function() {
         // Add an event listener for the "change" event on the select element

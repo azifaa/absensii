@@ -42,25 +42,33 @@ class Admin extends CI_Controller {
 		$this->load->view('admin/karyawan',$data);
 	}
     public function hapus_karyawan($id)
-{
-   $this->m_model->delete('user', 'id', $id);
-    redirect(base_url('admin/data_karyawan'));
-}
-public function hapus_absen($id)
+    {
+       $this->m_model->delete('absensi', 'id', $id);
+        redirect(base_url('admin/dashboard'));
+    }
+    public function hapus_data_karyawan($id)
+    {
+       $this->m_model->delete('user', 'id', $id);
+        redirect(base_url('admin/karyawan'));
+    }
+    public function hapus_absen($id)
 { 
-    $this->m_model->delete('absen', 'id_karyawan', $id); 
+    $this->m_model->delete('absensi', 'id_karyawan', $id); 
     switch($this->uri->segment(2)){
         case 'rekap_keseluruhan':
-            redirect(base_url('admin/rekap_keseluruhan')); 
+            redirect(base_url('admin/rekap_keseluruhan'));
+            break;
         case 'rekap_harian':
-            redirect(base_url('admin/rekap_harian')); 
+            redirect(base_url('admin/rekap_harian'));
+            break;
         case 'rekap_mingguan':
             redirect(base_url('admin/rekap_mingguan'));
+            break;
         default:
-        redirect(base_url('admin/rekap_mingguan')); 
+            redirect(base_url('admin/rekap_bulanan')); 
+            break;
     }
 }
-
     // rekap bulanan
     public function rekap_bulanan() {
         $bulan = $this->input->post('bulan'); // Mengambil bulan dari input form
@@ -69,32 +77,22 @@ public function hapus_absen($id)
         $this->load->view('admin/rekap_bulanan', $data);
     }
     // rekap harian
-    public function rekap_harian()
-{
-    $this->load->library('pagination'); // Memuat pustaka pagination
-
-    $tanggal = date('Y-m-d');
-    $config = array(
-        'base_url' => site_url('admin/rekap_harian'),
-        'total_rows' => $this->m_model->count_harian($tanggal),
-        'per_page' => 10,
-        'num_links' => 4,
-        'use_page_numbers' => TRUE,
-    );
-    $config['full_tag_open'] = '<div class="pagination">';
-    $config['full_tag_close'] = '</div>';
-
-    $this->pagination->initialize($config); // Menginisialisasi objek pagination
-
-    $page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 1;
-    $data['data_harian'] = $this->m_model->get_harian_page($config['per_page'], ($page - 1) * $config['per_page'], $tanggal);
-    $data['links'] = $this->pagination->create_links();
-
-    $this->load->view('admin/rekap_harian', $data);
-}
+    public function rekap_harian() {
+        if ($this->input->post('tanggal')) {
+            $tanggal = $this->input->post('tanggal'); // Ambil tanggal yang dipilih dari form
+            $perhari = $this->m_model->getPerhariData($tanggal); // Mengirim tanggal ke model
+        } else {
+            $perhari = $this->m_model->getPerhariData(); // Jika tidak ada tanggal yang dipilih, ambil data tanpa filter
+        }
+    
+        // Kemudian, Anda dapat mempassing data ini ke tampilan (view) Anda.
+        $data['perhari'] = $perhari;
+        $this->load->view('admin/rekap_harian', $data);
+    }
+    
 
 public function rekapPerHari() {
-    $tanggal = $this->input->get('tanggal');
+    $tanggal = $this->input->get('date');
           $data['perhari'] = $this->m_model->getPerHari($tanggal);
           $this->load->view('admin/rekap_harian', $data);
       }

@@ -96,6 +96,7 @@
                             <th class="px-3 py-2 text-xs text-gray-500">JAM PULANG</th>
                             <th class="px-3 py-2 text-xs text-gray-500">KETERANGAN IZIN</th>
                             <th class="px-3 py-2 text-xs text-gray-500">STATUS</th>
+                            <th class="px-3 py-2 text-xs text-gray-500">AKSI</th>
                         </tr>
                     </thead>
                     <tbody class="bg-white divide-y divide-gray-300">
@@ -141,6 +142,12 @@
                       <?php echo $row->status?>
                       </div>
                     </td>
+                            <td>
+                                <!-- HAPUS -->
+                                <button onClick="hapus(<?php echo $row->id?>)"
+                                    class="btn btn-sm btn-danger mx-1"><i class="fa-solid fa-trash"></i></button>
+
+                            </td>
                         </tr>
                         <?php endforeach?>
                     </tbody>
@@ -152,6 +159,22 @@
         </div>
       </main>
     </div>
-
+<!-- HAPUS -->
+<script>
+    function hapus(id) {
+        Swal.fire({
+            title: 'Apakah Kamu Ingin Menghapusnya?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Ya, Hapus!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = "<?php echo base_url('admin/hapus_karyawan/') ?>" + id;
+            }
+        });
+    }
+</script>
 </body>
 </html>

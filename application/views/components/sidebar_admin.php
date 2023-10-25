@@ -117,6 +117,7 @@
                     </svg>
                     <span class="font-semibold text-lg">Data Karyawan</span>
                 </a>
+                
                 <a href="<?php echo base_url('admin/rekap_harian') ?>"
                     class="flex items-center py-2 text-white px-4 transition duration-300 no-underline gap-2"
                     activeclass="active">
