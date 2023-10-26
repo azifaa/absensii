@@ -52,10 +52,29 @@
         --tran-03: all 0.3s ease;
         --tran-03: all 0.2s ease;
     }
-
     body {
+        display: flex;
+        flex-direction: column;
         min-height: 100vh;
         background-color: var(--primary-color);
+    }
+    .profile {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        padding: 10px 20px;
+    }
+
+    .profile img {
+        width: 40px;
+        border-radius: 50%;
+        margin-right: 10px;
+    }
+
+    .profile .user-name {
+        font-size: 18px;
+        font-weight: 500;
+        color: var(--text-color);
     }
 
     body.dark {
@@ -580,6 +599,7 @@
                 </li>
         </div>
     </nav>
+    
     <script src="script.js"></script>
     <script>
         const body = document.querySelector("body"),
